@@ -1,4 +1,6 @@
-﻿namespace Go_Logic
+﻿using Go_Logic.data_structures;
+
+namespace Go_Logic
 {
     public class GameState
     {
@@ -19,10 +21,6 @@
             boardSize = board.Get_size();
             blackStoneCounter = (boardSize * boardSize) / 2 + (boardSize * boardSize) % 2;
             whiteStoneCounter = (boardSize * boardSize) / 2;
-        }
-        public Place GetPlacingState(Tuple<int, int> cordinates)
-        {
-            return new NormalPlace(cordinates);
         }
 
         public int DecreaseStone()

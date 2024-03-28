@@ -2,6 +2,7 @@
 using System.Windows.Controls;
 using System.Windows.Input;
 using Go_Logic;
+using static System.Net.WebRequestMethods;
 
 namespace Go_UI
 {
@@ -22,6 +23,7 @@ namespace Go_UI
             gameState = new GameState(Player.Black, new Go_Board(9));// need to add komi, a form which inside of him buttons which' let as select how much advantage to give the oponnent
             InitializeBoard();
             DrawCurrentBoard(gameState.Board);
+            Set_Cursor(gameState.Player);
         }
 
         private void InitializeBoard()
@@ -77,13 +79,19 @@ namespace Go_UI
         private void Board_MouseDown(object sender, MouseButtonEventArgs e)
         {
             Point mousePosition = e.GetPosition(PiecesGrid);
-            Tuple<int, int> placeCordinates = ToGridCordinates(mousePosition);
-            if (!gameState.CanAdd())
+            Handle_A_Move(mousePosition);
+        }
+
+
+        private void Handle_A_Move(Point position)
+        {
+            Tuple<int, int> placeCordinates = ToGridCordinates(position);
+            if (!gameState.CanAdd() || gameState.Board.IsOccupied(placeCordinates))
             {
                 //MessageBox.Show("You can't add more stones");
                 return;
             }
-            if (placeCordinates != null && !gameState.Board.IsOccupied(placeCordinates))
+            if (placeCordinates != null)
             {
                 int row = hoverCordinates.Item1;
                 int col = hoverCordinates.Item2;
@@ -91,7 +99,9 @@ namespace Go_UI
                 gameState.DecreaseStone();
             }
             DrawCurrentBoard(gameState.Board);
+            Switch_Turn();
         }
+
 
         private void HideImage()
         {
@@ -121,6 +131,22 @@ namespace Go_UI
         private void Switch_Turn()
         {
             gameState.Switch();
+            Set_Cursor(gameState.Player);
+        }
+
+        private void Set_Cursor(Player player)
+        {
+            switch (player)
+            {
+                case Player.Black:
+                    Game.Cursor = GoCursors.BlackCursor;
+                    break;
+                case Player.White:
+                    Game.Cursor = GoCursors.WhiteCursor;
+                    break;
+                default:
+                    break;
+            }
         }
 
         private void Pass_Click(object sender, RoutedEventArgs e)

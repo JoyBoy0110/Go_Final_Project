@@ -12,6 +12,8 @@
     <None Remove="Assets\9Board.png" />
     <None Remove="Assets\black_stone.png" />
     <None Remove="Assets\Board.png" />
+    <None Remove="Assets\CursorB.cur" />
+    <None Remove="Assets\CursorW.cur" />
     <None Remove="Assets\white_stone.png" />
   </ItemGroup>
 
@@ -23,6 +25,8 @@
     <Resource Include="Assets\9Board.png" />
     <Resource Include="Assets\black_stone.png" />
     <Resource Include="Assets\Board.png" />
+    <Resource Include="Assets\CursorB.cur" />
+    <Resource Include="Assets\CursorW.cur" />
     <Resource Include="Assets\white_stone.png" />
   </ItemGroup>
 
