@@ -1,0 +1,12 @@
+C:\Users\naorb\source\repos\goFinalProject\Go_Logic\bin\Debug\net8.0\Go_Logic.deps.json
+C:\Users\naorb\source\repos\goFinalProject\Go_Logic\bin\Debug\net8.0\Go_Logic.dll
+C:\Users\naorb\source\repos\goFinalProject\Go_Logic\bin\Debug\net8.0\Go_Logic.pdb
+C:\Users\naorb\source\repos\goFinalProject\Go_Logic\obj\Debug\net8.0\Go_Logic.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\naorb\source\repos\goFinalProject\Go_Logic\obj\Debug\net8.0\Go_Logic.AssemblyInfoInputs.cache
+C:\Users\naorb\source\repos\goFinalProject\Go_Logic\obj\Debug\net8.0\Go_Logic.AssemblyInfo.cs
+C:\Users\naorb\source\repos\goFinalProject\Go_Logic\obj\Debug\net8.0\Go_Logic.csproj.CoreCompileInputs.cache
+C:\Users\naorb\source\repos\goFinalProject\Go_Logic\obj\Debug\net8.0\Go_Logic.sourcelink.json
+C:\Users\naorb\source\repos\goFinalProject\Go_Logic\obj\Debug\net8.0\Go_Logic.dll
+C:\Users\naorb\source\repos\goFinalProject\Go_Logic\obj\Debug\net8.0\refint\Go_Logic.dll
+C:\Users\naorb\source\repos\goFinalProject\Go_Logic\obj\Debug\net8.0\Go_Logic.pdb
+C:\Users\naorb\source\repos\goFinalProject\Go_Logic\obj\Debug\net8.0\ref\Go_Logic.dll
