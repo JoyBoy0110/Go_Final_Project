@@ -1,19 +1,17 @@
-﻿using Go_Logic.data_structures;
-
-namespace Go_Logic
+﻿namespace Go_Logic
 {
     public class Go_Board : Go_Equipment
     {
-        public Dictionary<Coordinates, Player> board_dict;
+        public Dictionary<(int, int), Player> board_dict;
         private int size;
 
         public Go_Board(int size)
         {
             this.size = size;
-            this.board_dict = new Dictionary<Coordinates, Player>();
+            this.board_dict = new Dictionary<(int, int), Player>();
         }
 
-        public void Add_Stone(Coordinates coordinates, Player color)
+        public void Add_Stone((int,int) coordinates, Player color)
         {
             board_dict.Add(coordinates, color);
         }
@@ -23,7 +21,7 @@ namespace Go_Logic
             return size;
         }
 
-        public bool Check_empty(Coordinates coordinates)
+        public bool Check_empty((int,int) coordinates)
         {
             return board_dict.ContainsKey(coordinates);
         }
@@ -33,7 +31,7 @@ namespace Go_Logic
         /// </summary>
         /// <param name="coordinates"></param>
         /// <returns></returns>
-        public bool IsOccupied(Coordinates coordinates)
+        public bool IsOccupied((int,int) coordinates)
         {
             return board_dict.ContainsKey(coordinates);
         }
@@ -43,23 +41,21 @@ namespace Go_Logic
         /// </summary>
         /// <param name="coordinates"></param>
         /// <returns></returns>
-        public bool IsInside(Coordinates coordinates)
+        public bool IsInside((int,int) coordinates)
         {
-            return coordinates.x < size && coordinates.x >= 0 && coordinates.y < size && coordinates.y >= 0;
+            return coordinates.Item1 < size && coordinates.Item1 >= 0 && coordinates.Item2 < size && coordinates.Item2 >= 0;
         }
 
 
         public override bool Equals(object obj)
         {
-            return obj is Go_Board board &&
-                   EqualityComparer<Dictionary<Coordinates, Player>>.Default.Equals(board_dict, board.board_dict) &&
-                   size == board.size;
+            return obj is Go_Board board && size == board.size;
         }
 
         public override int GetHashCode()
         {
             int hashCode = 774960232;
-            hashCode = hashCode * -1521134295 + EqualityComparer<Dictionary<Coordinates, Player>>.Default.GetHashCode(board_dict);
+            hashCode = hashCode * -1521134295 + EqualityComparer<Dictionary<(int,int), Player>>.Default.GetHashCode(board_dict);
             hashCode = hashCode * -1521134295 + size.GetHashCode();
             return hashCode;
         }
@@ -67,7 +63,7 @@ namespace Go_Logic
         public override Go_Equipment Copy()
         {
             Go_Board copy = new Go_Board(this.size);
-            foreach (Coordinates key in this.board_dict.Keys)
+            foreach ((int,int) key in this.board_dict.Keys)
             {
                 copy.board_dict.Add(key, this.board_dict[key]);
             }

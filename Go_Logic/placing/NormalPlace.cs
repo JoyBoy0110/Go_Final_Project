@@ -1,13 +1,11 @@
-﻿using Go_Logic.data_structures;
-
-namespace Go_Logic
+﻿namespace Go_Logic
 {
     public class NormalPlace : Place
     {
         public override PlaceType Type => PlaceType.Normal;
-        public override Coordinates ToCordinates { get; }
+        public override (int,int) ToCordinates { get; }
 
-        public NormalPlace(Coordinates cordinates)
+        public NormalPlace((int, int) cordinates)
         {
             ToCordinates = cordinates;
         }

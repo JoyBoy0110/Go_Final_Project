@@ -1,4 +1,4 @@
-﻿using Go_Logic.data_structures;
+﻿
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,25 +9,23 @@ namespace Go_Logic.go_rules
 {
     public class handler
     {
-        private Coordinates[] directions = {
-            new Coordinates(0, -1),
-            new Coordinates(-1, 0),
-            new Coordinates(0, 1),
-            new Coordinates(1, 0) };
+        private (int,int)[] directions = {
+            new (0, -1),
+            new (-1, 0),
+            new (0, 1),
+            new (1, 0) };
 
         private GameState state;
-        private Go_Board board;
 
         public handler(GameState state)
         {
             this.state = state;
-            this.board = state.Board;
         }
 
 
-        public bool IsCaptured(Coordinates cord)
+        public bool IsCaptured((int,int) cord)
         {
-            Dictionary<Coordinates, Player> group = GetGroup(cord, board.board_dict[cord]);// creates the group of the stone
+            Dictionary<(int,int), Player> group = GetGroup(cord, this.state.Board.board_dict[cord]);// creates the group of the stone
             int liberties = GetLibertiesOfGroup(group);
             if (liberties < 0 || liberties > 4 * group.Count)
             {
@@ -40,43 +38,47 @@ namespace Go_Logic.go_rules
             }
             return false;
         }
-        public int GetLibertiesOfGroup(Dictionary<Coordinates, Player> group)// 1 stone is also a group
+        public int GetLibertiesOfGroup(Dictionary<(int,int), Player> group)// 1 stone is also a group
         {
             int liberties = 0;
-            foreach (Coordinates coord in group.Keys)
+            foreach ((int,int) coord in group.Keys)
             {
-                Dictionary<Coordinates, Player> neighbors = Get_Neighbors(coord);
+                Dictionary<(int,int), Player> neighbors = Get_Neighbors(coord);
                 liberties += 4 - neighbors.Count;
             }
             return liberties;
         }
-        public Dictionary<Coordinates, Player> Get_Neighbors(Coordinates cord)
+        public Dictionary<(int,int), Player> Get_Neighbors((int,int) cord)
         {
-            Dictionary<Coordinates, Player> neighbor_dict = new Dictionary<Coordinates, Player>();
-            foreach (Coordinates direction in directions)
+            Dictionary<(int,int), Player> neighbor_dict = new Dictionary<(int,int), Player>();
+            foreach ((int,int) direction in directions)
             {
-                Coordinates neighbor = new Coordinates(cord.x + direction.x, cord.y + direction.y);
-                if (board.IsInside(neighbor))
+                (int,int) neighbor = new (cord.Item1 + direction.Item1, cord.Item2 + direction.Item2);
+                if(!this.state.Board.IsInside(neighbor))
                 {
-                    neighbor_dict.Add(neighbor, board.board_dict[neighbor]);
+                    neighbor_dict.Add(neighbor, Player.None);
+                }
+                else if (this.state.Board.board_dict.ContainsKey(neighbor))
+                {
+                    neighbor_dict.Add(neighbor, this.state.Board.board_dict[neighbor]);
                 }
             }
             return neighbor_dict;
         }
 
-        private Dictionary<Coordinates, Player> GetGroup(Coordinates coord, Player color)
+        private Dictionary<(int,int), Player> GetGroup((int,int) coord, Player color)
         {
-            return GetGroup(coord, color, new Dictionary<Coordinates, Player>());
+            return GetGroup(coord, color, new Dictionary<(int,int), Player>());
         }
-        private Dictionary<Coordinates, Player> GetGroup(Coordinates coord, Player color, Dictionary<Coordinates, Player> group)
+        private Dictionary<(int,int), Player> GetGroup((int,int) coord, Player color, Dictionary<(int,int), Player> group)
         {
-            if (board.IsInside(coord) && board.IsOccupied(coord) && board.board_dict[coord] == color && group.ContainsKey(coord))
+            if (this.state.Board.IsInside(coord) && this.state.Board.IsOccupied(coord) && this.state.Board.board_dict[coord] == color && !group.ContainsKey(coord))
             {
                 group.Add(coord, color);
-                group = GetGroup(new Coordinates(coord.x + directions[0].x, coord.y + directions[0].y), color, group);
-                group = GetGroup(new Coordinates(coord.x + directions[1].x, coord.y + directions[1].y), color, group);
-                group = GetGroup(new Coordinates(coord.x + directions[2].x, coord.y + directions[2].y), color, group);
-                group = GetGroup(new Coordinates(coord.x + directions[3].x, coord.y + directions[3].y), color, group);
+                group = GetGroup(new (coord.Item1 + directions[0].Item1, coord.Item2 + directions[0].Item2), color, group);
+                group = GetGroup(new (coord.Item1 + directions[1].Item1, coord.Item2 + directions[1].Item2), color, group);
+                group = GetGroup(new (coord.Item1 + directions[2].Item1, coord.Item2 + directions[2].Item2), color, group);
+                group = GetGroup(new (coord.Item1 + directions[3].Item1, coord.Item2 + directions[3].Item2), color, group);
             }
             return group;
         }
@@ -84,10 +86,10 @@ namespace Go_Logic.go_rules
 
 
 
-        public Place GetPlacingState(Coordinates cordinates)
+        public Place GetPlacingState((int,int) cordinates)
         {
             // if the position is occupied or outside the board
-            if (board.IsOccupied(cordinates) || !board.IsInside(cordinates))
+            if (this.state.Board.IsOccupied(cordinates) || !this.state.Board.IsInside(cordinates))
             {
                 return null;
             }
@@ -97,16 +99,10 @@ namespace Go_Logic.go_rules
             }
             return new NormalPlace(cordinates);
         }
-        /// <summary>
-        /// checks if a move is possible' returns false if not
-        /// </summary>
-        /// <param name="cord"></param>
-        /// <param name="color"></param>
-        /// <returns></returns>
-        private bool IsPossible(Coordinates cord)// cord are where to put the stone colored color
+        private bool IsPossible((int,int) cord)// cord are where to put the stone colored color
         {
             Stone stone = new Stone(state.Player, cord);
-            if (!board.IsOccupied(cord) && IsCaptured(cord))
+            if (!this.state.Board.IsOccupied(cord) && IsCaptured(cord))
             {
                 return false;// suicide, can add, not ocupide
             }

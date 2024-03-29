@@ -19,8 +19,8 @@
             <Grid.Background>
                 <SolidColorBrush Color="PaleGoldenrod"></SolidColorBrush>
             </Grid.Background>
-
-            <Grid x:Name="middle" Grid.Row="1">
+            <TextBlock Grid.Row="0" x:Name="text_block" FontSize="70" HorizontalAlignment="Center">Go</TextBlock>
+                <Grid x:Name="middle" Grid.Row="1">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition  Width="100"></ColumnDefinition>
                     <ColumnDefinition Width="800"></ColumnDefinition>

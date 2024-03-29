@@ -2,7 +2,7 @@
 using System.Windows.Controls;
 using System.Windows.Input;
 using Go_Logic;
-using static System.Net.WebRequestMethods;
+using Go_Logic.go_rules;
 
 namespace Go_UI
 {
@@ -14,7 +14,7 @@ namespace Go_UI
         private readonly Image[,] PieceImages = new Image[9, 9];
         private readonly Image[,] HoverImages = new Image[9, 9];
         private GameState gameState;
-        private Tuple<int, int> hoverCordinates = null;
+        private (int,int) hoverCordinates = (-1,-1);
 
 
         public GamePage()
@@ -24,6 +24,7 @@ namespace Go_UI
             InitializeBoard();
             DrawCurrentBoard(gameState.Board);
             Set_Cursor(gameState.Player);
+            test();
         }
 
         private void InitializeBoard()
@@ -46,29 +47,31 @@ namespace Go_UI
 
         private void DrawCurrentBoard(Go_Board board)
         {
-            foreach (Tuple<int, int> cordinates in board.board_dict.Keys)
+            foreach ((int,int) cordinates in board.board_dict.Keys)
             {
                 PieceImages[cordinates.Item1, cordinates.Item2].Source = Images.GetImage(board.board_dict[cordinates]);
             }
         }
 
-        private Tuple<int, int> ToGridCordinates(Point mousePosition)
+        private (int,int) ToGridCordinates(Point mousePosition)
         {
             int row = (int)(mousePosition.Y / (Board.Height / 9));
             int col = (int)(mousePosition.X / (Board.Width / 9));
-            return new Tuple<int, int>(row, col);
+            if (row < 0 || row >= 9 || col < 0 || col >= 9)
+                return (-1,-1);
+            return new (row, col);
         }
 
         private void Image_MouseMove(object sender, MouseEventArgs e)
         {
             Point mousePosition = e.GetPosition(PiecesGrid);
-            Tuple<int, int> temp = ToGridCordinates(mousePosition);
-            if (temp != null && !temp.Equals(hoverCordinates))
+            (int,int) temp = ToGridCordinates(mousePosition);
+            if (temp != (-1,-1) && !temp.Equals(hoverCordinates))
             {
                 HideImage();
                 hoverCordinates = temp;
             }
-            if (hoverCordinates != null)
+            if (hoverCordinates != (-1,-1))
             {
                 int row = hoverCordinates.Item1;
                 int col = hoverCordinates.Item2;
@@ -80,18 +83,19 @@ namespace Go_UI
         {
             Point mousePosition = e.GetPosition(PiecesGrid);
             Handle_A_Move(mousePosition);
+            test();
         }
 
 
         private void Handle_A_Move(Point position)
         {
-            Tuple<int, int> placeCordinates = ToGridCordinates(position);
+            (int,int) placeCordinates = ToGridCordinates(position);
             if (!gameState.CanAdd() || gameState.Board.IsOccupied(placeCordinates))
             {
                 //MessageBox.Show("You can't add more stones");
                 return;
             }
-            if (placeCordinates != null)
+            if (placeCordinates != (-1,-1))
             {
                 int row = hoverCordinates.Item1;
                 int col = hoverCordinates.Item2;
@@ -105,7 +109,7 @@ namespace Go_UI
 
         private void HideImage()
         {
-            if (hoverCordinates != null)
+            if (hoverCordinates != (-1,-1))
             {
                 int row = hoverCordinates.Item1;
                 int col = hoverCordinates.Item2;
@@ -152,6 +156,16 @@ namespace Go_UI
         private void Pass_Click(object sender, RoutedEventArgs e)
         {
             Switch_Turn();
+        }
+
+        private void test()
+        {
+            if (gameState.Board.board_dict.ContainsKey((0, 0)))
+            {
+
+                handler testHandler = new handler(gameState);
+                text_block.Text = testHandler.IsCaptured((0, 0)).ToString();
+            }
         }
     }
 }
