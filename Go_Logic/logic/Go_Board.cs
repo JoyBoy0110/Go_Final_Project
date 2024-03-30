@@ -1,6 +1,6 @@
 ﻿namespace Go_Logic
 {
-    public class Go_Board : Go_Equipment
+    public class Go_Board
     {
         public Dictionary<(int, int), Player> board_dict;
         private int size;
@@ -60,7 +60,7 @@
             return hashCode;
         }
 
-        public override Go_Equipment Copy()
+        public Go_Board Copy()
         {
             Go_Board copy = new Go_Board(this.size);
             foreach ((int,int) key in this.board_dict.Keys)
