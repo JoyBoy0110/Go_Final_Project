@@ -6,13 +6,10 @@ using System.Threading.Tasks;
 
 namespace Go_Logic
 {
-    public class CuptureHandler
+    public class CuptureHandler : RulesHandler
     {
-        private GameState state;
-
-        public CuptureHandler(GameState state)
+        public CuptureHandler(GameState state) : base(state)
         {
-            this.state = state;
         }
 
         public Go_Board Capture(Dictionary<(int, int), Player> group)

@@ -25,3 +25,6 @@ C:\Users\naorb\source\repos\goFinalProject\Go_UI\obj\Debug\net8.0-windows\refint
 C:\Users\naorb\source\repos\goFinalProject\Go_UI\obj\Debug\net8.0-windows\Go_UI.pdb
 C:\Users\naorb\source\repos\goFinalProject\Go_UI\obj\Debug\net8.0-windows\Go_UI.genruntimeconfig.cache
 C:\Users\naorb\source\repos\goFinalProject\Go_UI\obj\Debug\net8.0-windows\ref\Go_UI.dll
+C:\Users\naorb\source\repos\goFinalProject\Go_UI\obj\Debug\net8.0-windows\UIs\EndScreen.g.cs
+C:\Users\naorb\source\repos\goFinalProject\Go_UI\obj\Debug\net8.0-windows\UIs\GamePage.g.cs
+C:\Users\naorb\source\repos\goFinalProject\Go_UI\obj\Debug\net8.0-windows\UIs\MainWindow.g.cs

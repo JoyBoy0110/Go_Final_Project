@@ -1,34 +1,61 @@
-﻿
-
-namespace Go_Logic
+﻿namespace Go_Logic
 {
     public class GameState
     {
-        public Go_Board Board { get; private set; }
-        public Player Player { get; private set; }
-        private int boardSize;
+        public Go_Board Board { get; private set; }// the game board
+        public Player Player { get; private set;}// the color of the current player
+        private int boardSize;// the size of the board
+        private double komi;// the advantage that the white player gets at the end of the game
 
-        public int blackStoneCounter { get; private set; }
-        public int whiteStoneCounter { get; private set; }
-        public int blackCaptures{ get; private set; }
-        public int whiteCaptures { get; private set; }
+        public int blackStoneCounter { get; private set; }// a field that keeps track of how many stones left for black
+        public int whiteStoneCounter { get; private set; }// a field that keeps track of how many stones left for white
+
+        public double blackScore { get; private set; }// a field that keeps track of the score that the black player has achived at the end of the game 
+        public double whiteScore { get; private set; }// a field that keeps track of the score that the white player has achived at the end of the game
 
         public List<Dictionary<(int,int), Player>> boardGroups { get; private set; }
         private LibritiesHandler libritiesHandler;
         private GroupHandler groupHandler;
         private CuptureHandler cuptureHandler;
+        private PlacingHandler placingHandler;
+        private EndGameHandler endGameHandler;
 
+        public Go_Board[] versions;// the last two versions of the board
 
-        public GameState(Player player, Go_Board board)
+        /// <summary>
+        /// constructor for the game state, initialize all the components
+        /// </summary>
+        /// <param name="player"></param>
+        /// <param name="board"></param>
+        public GameState(Go_Board board, double komi)
         {
-            Player = player;
+            Player = Player.Black;
             Board = board;
             boardSize = board.Get_size();
-            blackCaptures = 0;
-            whiteCaptures = 0;
             blackStoneCounter = (boardSize * boardSize) / 2 + (boardSize * boardSize) % 2;
             whiteStoneCounter = (boardSize * boardSize) / 2;
+            this.komi = komi;
+            blackScore = 0;
+            whiteScore = this.komi;
             boardGroups = new List<Dictionary<(int, int), Player>>();
+            versions = new Go_Board[2];
+            versions[0] = null;
+            versions[1] = null;
+        }
+        public GameState(Go_Board board, Player starting_player, double komi)
+        {
+            Player = starting_player;
+            Board = board;
+            boardSize = board.Get_size();
+            blackStoneCounter = (boardSize * boardSize) / 2 + (boardSize * boardSize) % 2;
+            whiteStoneCounter = (boardSize * boardSize) / 2;
+            this.komi = komi;
+            blackScore = 0;
+            whiteScore = this.komi;
+            boardGroups = new List<Dictionary<(int, int), Player>>();
+            versions = new Go_Board[2];
+            versions[0] = null;
+            versions[1] = null;
         }
 
         public int DecreaseStone()
@@ -45,64 +72,6 @@ namespace Go_Logic
                     return 0;
             }
         }
-        public void AddCupturedStone(Player cuptured)
-        {
-            switch (cuptured)
-            {
-                case Player.Black:
-                    whiteCaptures++;
-                    break;
-                case Player.White:
-                    blackCaptures++;
-                    break;
-                default:
-                    break;
-            }
-        }
-        public void Switch()
-        {
-            Player = Player.Opponnent();
-        }
-        
-        public bool CanAdd()
-        {
-            switch (Player)
-            {
-                case Player.Black:
-                    return blackStoneCounter > 0;
-                case Player.White:
-                    return whiteStoneCounter > 0;
-                default:
-                    return false;
-            }
-        }
-
-        public void Update()
-        {
-            //psudo code
-            // update groups
-            // get librities
-            // check if any group is captured
-            // send to cupture handler
-            //get the new board
-            // update main board with updated board
-            groupHandler = new GroupHandler(this);
-            libritiesHandler = new LibritiesHandler(this);
-            boardGroups = groupHandler.GetGroups();
-            foreach (Dictionary<(int, int), Player> group in boardGroups)
-            {
-                if (libritiesHandler.IsCaptured(group))
-                {
-                    cuptureHandler = new CuptureHandler(this);
-                    this.Board = cuptureHandler.Capture(group);
-                    foreach ((int, int) cord in group.Keys)
-                    {
-                        AddCupturedStone(group[cord]);
-                    }
-                }
-            }
-        }
-
         public bool removeStone((int, int) coordinates)
         {
             if (Board.IsOccupied(coordinates))
@@ -123,28 +92,213 @@ namespace Go_Logic
             }
             return false;
         }
+        
+        /// <summary>
+        /// addes a point to the score to the player that cuptured the stone
+        /// </summary>
+        /// <param name="cuptured"></param>
+        public void AddCupturedStone(Player cuptured)
+        {
+            switch (cuptured)
+            {
+                case Player.Black:
+                    whiteScore++;
+                    break;
+                case Player.White:
+                    blackScore++;
+                    break;
+                default:
+                    break;
+            }
+        }
 
-        //public Place GetPlacingState((int, int) cordinates)
-        //{
-        //    // if the position is occupied or outside the board
-        //    if (this.state.Board.IsOccupied(cordinates) || !this.state.Board.IsInside(cordinates))
-        //    {
-        //        return null;
-        //    }
-        //    if (0 == 0)//CanAdd() &&)
-        //    {
-        //        return new NormalPlace(cordinates);
-        //    }
-        //    return new NormalPlace(cordinates);
-        //}
-        //private bool IsPossible((int, int) cord)// cord are where to put the stone colored color
-        //{
-        //    Stone stone = new Stone(state.Player, cord);
-        //    if (!this.state.Board.IsOccupied(cord) && IsCaptured(cord))
-        //    {
-        //        return false;// suicide, can add, not ocupide
-        //    }
-        //    return true;
-        //}
+        /// <summary>
+        /// checks if the game has ended, if the game has ended returns true, if not returns false
+        /// </summary>
+        /// <returns></returns>
+        private bool EndGame()
+        {
+            if (blackStoneCounter == 0 || whiteStoneCounter == 0)// no more stones to add
+            {
+                return true;
+            }
+            if (versions[0] != null && versions[1] != null && versions[0].Equals(versions[1]))// two consecutive passes
+            {
+                return true;
+            }
+            return false;
+        }
+
+        /// <summary>
+        /// returns the winner of the game, if a tie the none, if one won the player that won,
+        /// if resign the player that didnt resign
+        /// </summary>
+        /// <param name="EndGameState"></param>
+        /// <returns></returns>
+        public Player GetWinner(EndType EndGameState)
+        {
+            endGameHandler = new EndGameHandler(this);
+            return endGameHandler.EndGame(EndGameState);
+        }
+
+        /// <summary>
+        /// a method that passes the turn, if both players pass the game ends
+        /// </summary>
+        /// <returns></returns>
+        public bool Pass()
+        {
+            Update();
+            if(EndGame())
+            {
+                return true;
+            }
+            AddCupturedStone(Player);
+            Switch();
+            return false;
+        }
+
+        /// <summary>
+        /// a method that switches the player
+        /// </summary>
+        public void Switch()
+        {
+            Player = Player.Opponnent();
+        }
+        
+        /// <summary>
+        /// checks if a stone can be added to the board by the counter of the reamaing stones
+        /// </summary>
+        /// <returns></returns>
+        public bool CanAdd()
+        {
+            switch (Player)
+            {
+                case Player.Black:
+                    return blackStoneCounter > 0;
+                case Player.White:
+                    return whiteStoneCounter > 0;
+                default:
+                    return false;
+            }
+        }
+
+        public void Update()
+        {
+            //psudo code
+            // save past board
+            // update groups
+            // get librities
+            // check if any group is captured
+            // send to cupture handler
+            //get the new board
+            // update main board with updated board
+            SaveVersions();
+            groupHandler = new GroupHandler(this);
+            libritiesHandler = new LibritiesHandler(this);
+            boardGroups = groupHandler.GetGroups();
+            foreach (Dictionary<(int, int), Player> group in boardGroups)
+            {
+                if (libritiesHandler.IsCaptured(group))
+                {
+                    cuptureHandler = new CuptureHandler(this);
+                    this.Board = cuptureHandler.Capture(group);
+                    foreach ((int, int) cord in group.Keys)
+                    {
+                        AddCupturedStone(group[cord]);
+                    }
+                }
+            }
+        }
+        
+        /// <summary>
+        /// add a stone to the board if possible (if the placing is equal to legal suicide or normal)
+        /// if possible add to board and return true if not dont add and return false
+        /// </summary>
+        /// <param name="cord"></param>
+        /// <returns></returns>
+        public bool AddStone((int, int) cord)
+        {
+            placingHandler = new PlacingHandler(this);
+            PlaceType placeType = placingHandler.EvaluatePlace(cord, Player);
+            if (placeType != PlaceType.Normal && placeType != PlaceType.legal_suicide)
+            {
+                return false;
+            }
+            Board.Add_Stone(cord, Player);
+            Update();
+            return true;
+        }
+
+        public bool IsKo((int, int) cord, Player color)
+        {
+            Go_Board temp = Board.Copy();
+            temp.Add_Stone(cord, color); 
+            if (versions[0] == null)
+            {
+                return false;
+            }
+            return versions[0].Equals(temp);
+        }
+
+        public bool IsLegalSuicide((int, int) cord, Player color)
+        {
+            if (Board.IsOccupied(cord))
+            {
+                return false;
+            }
+            GameState temp = new GameState(Board.Copy(), color, this.komi);
+            temp.groupHandler = new GroupHandler(temp);
+            temp.libritiesHandler = new LibritiesHandler(temp);
+            temp.Board.Add_Stone(cord, Player);
+            int flag = temp.libritiesHandler.GetNumberOfLibertiesOfGroup(temp.groupHandler.GetGroup(cord, Player));
+            temp.Update();
+            if (temp.libritiesHandler.GetNumberOfLibertiesOfGroup(temp.groupHandler.GetGroup(cord, Player)) != 0 && flag == 0)
+            {
+                return true;
+            }
+            return false;
+        }
+
+        public bool IsSuicide((int, int) cord, Player color)
+        {
+            if (Board.IsOccupied(cord))
+            {
+                return false;
+            }
+            GameState temp = new GameState(Board.Copy(), color, this.komi);
+            temp.Board.Add_Stone(cord, Player);
+            temp.groupHandler = new GroupHandler(temp);
+            temp.libritiesHandler = new LibritiesHandler(temp);
+            if (temp.libritiesHandler.GetNumberOfLibertiesOfGroup(temp.groupHandler.GetGroup(cord, Player)) == 0)
+            {
+                return true;
+            }
+            return false;
+        }
+
+        /// <summary>
+        /// saves past two versions of the board
+        /// </summary>
+        private void SaveVersions()
+        {
+            versions[1] = versions[0];
+            versions[0] = Board.Copy();
+        }
+        
+        /// <summary>
+        /// returns a copy of the game state
+        /// </summary>
+        /// <returns></returns>
+        public GameState Copy()
+        {
+            GameState temp = new GameState(Board.Copy(), Player, this.komi);
+            temp.blackStoneCounter = blackStoneCounter;
+            temp.whiteStoneCounter = whiteStoneCounter;
+            temp.blackScore = blackScore;
+            temp.whiteScore = whiteScore;
+            temp.boardGroups = boardGroups;
+            temp.versions = versions;
+            return temp;
+        }
     }
 }

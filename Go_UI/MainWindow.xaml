@@ -22,16 +22,16 @@
             <SolidColorBrush Color="PaleGoldenrod"></SolidColorBrush>
         </Grid.Background>
         <Viewbox Grid.Column="1" Grid.Row="0">
-            <TextBlock Foreground="LightSlateGray" Text="go" FontFamily="Algerian"></TextBlock>
+            <TextBlock Foreground="Goldenrod" Text="go" FontFamily="Algerian"></TextBlock>
         </Viewbox>
-        <Button Opacity="0.75"  Foreground="White" Grid.Column="1" Grid.Row="1" Height="125" Width="200" Click="Play_Click" Name="play" Content="Play" FontSize="60" HorizontalAlignment="Center"  >
+        <Button Background="Beige" Opacity="0.75"  Foreground="Goldenrod" Grid.Column="1" Grid.Row="1" Height="125" Width="200" Click="Play_Click" Name="play" Content="Play" FontSize="60" HorizontalAlignment="Center"  >
             <Button.Resources>
                 <Style TargetType="{x:Type Border}">
                     <Setter Property="CornerRadius" Value="20"/>
                 </Style>
             </Button.Resources>
         </Button>
-        <Button Opacity="0.75" Foreground="White" Grid.Column="1" Grid.Row="2" Height="50" Width="100" Click="exit_Click"  Name="exit" Content="Exit" FontSize="15" HorizontalAlignment="Center">
+        <Button Background="Beige" Opacity="0.75" Foreground="Goldenrod" Grid.Column="1" Grid.Row="2" Height="50" Width="100" Click="exit_Click"  Name="exit" Content="Exit" FontSize="15" HorizontalAlignment="Center">
             <Button.Resources>
                 <Style TargetType="{x:Type Border}">
                     <Setter Property="CornerRadius" Value="10"/>

@@ -1,8 +1,8 @@
 ﻿using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
+using System.Windows.Media;
 using Go_Logic;
-using Go_Logic.go_rules;
 
 namespace Go_UI
 {
@@ -15,16 +15,16 @@ namespace Go_UI
         private readonly Image[,] HoverImages = new Image[9, 9];
         private GameState gameState;
         private (int, int) hoverCordinates = (-1, -1);
+        private bool endOfGame;
 
-
-        public GamePage()
+        public GamePage(double komi)
         {
             InitializeComponent();
-            gameState = new GameState(Player.Black, new Go_Board(9));// need to add komi, a form which inside of him buttons which' let as select how much advantage to give the oponnent
+            gameState = new GameState(new Go_Board(9), komi);// need to add komi, a form which inside of him buttons which' let as select how much advantage to give the oponnent
             InitializeBoard();
             DrawCurrentBoard(gameState.Board);
             Set_Cursor(gameState.Player);
-            test();
+            endOfGame = false;
         }
 
         private void InitializeBoard()
@@ -45,14 +45,31 @@ namespace Go_UI
                 }
         }
 
+        /// <summary>
+        /// draws the current board by the board that we get from gameState
+        /// </summary>
+        /// <param name="board"></param>
         private void DrawCurrentBoard(Go_Board board)
         {
             foreach ((int, int) cordinates in board.board_dict.Keys)
             {
                 PieceImages[cordinates.Item1, cordinates.Item2].Source = Images.GetImage(board.board_dict[cordinates]);
             }
+            for (int row = 0; row < PieceImages.GetLength(0); row++)
+                for (int col = 0; col < PieceImages.GetLength(1); col++)
+                {
+                    if (PieceImages[row, col].Source != null && !gameState.Board.board_dict.ContainsKey((row, col)))
+                    {
+                        PieceImages[row, col].Source = null;
+                    }
+                }
         }
 
+        /// <summary>
+        /// gets mouse position and returns the cordinates of the grid
+        /// </summary>
+        /// <param name="mousePosition"></param>
+        /// <returns></returns>
         private (int, int) ToGridCordinates(Point mousePosition)
         {
             int row = (int)(mousePosition.Y / (Board.Height / 9));
@@ -83,12 +100,11 @@ namespace Go_UI
         {
             Point mousePosition = e.GetPosition(PiecesGrid);
             Handle_A_Move(mousePosition);
-            test();
         }
-
 
         private void Handle_A_Move(Point position)
         {
+            bool flag = false;
             (int, int) placeCordinates = ToGridCordinates(position);
             if (!gameState.CanAdd() || gameState.Board.IsOccupied(placeCordinates))
             {
@@ -99,13 +115,18 @@ namespace Go_UI
             {
                 int row = hoverCordinates.Item1;
                 int col = hoverCordinates.Item2;
-                gameState.Board.Add_Stone(placeCordinates, gameState.Player);
-                gameState.DecreaseStone();
+                if (gameState.AddStone(placeCordinates))
+                {
+                    flag = true;
+                    gameState.DecreaseStone();
+                }
             }
-            DrawCurrentBoard(gameState.Board);
-            Switch_Turn();
+            if (flag)
+            {
+                DrawCurrentBoard(gameState.Board);
+                Switch_Turn();
+            }
         }
-
 
         private void HideImage()
         {
@@ -132,12 +153,19 @@ namespace Go_UI
             HideImage();
         }
 
+        /// <summary>
+        /// method that switches the turn of the game
+        /// </summary>
         private void Switch_Turn()
         {
             gameState.Switch();
             Set_Cursor(gameState.Player);
         }
 
+        /// <summary>
+        /// a method that sets the cursor image1
+        /// </summary>
+        /// <param name="player"></param>
         private void Set_Cursor(Player player)
         {
             switch (player)
@@ -152,37 +180,38 @@ namespace Go_UI
                     break;
             }
         }
+        
+        private void EndGame(EndType end)
+        {
+            
+        }
 
+        /// <summary>
+        /// a button that passes the turn, if both players pass the game ends
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void Pass_Click(object sender, RoutedEventArgs e)
         {
-            Switch_Turn();
+            endOfGame = gameState.Pass();
+            if (endOfGame)
+            {
+                EndGame(EndType.pass);
+            }
         }
 
-        private void test()
+        /// <summary>
+        /// a button that resigns the game, the player who pressed it loses
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void Resign_Click(object sender, RoutedEventArgs e)
         {
-            //if (gameState.Board.board_dict.ContainsKey((0, 0)))
-            //{
-
-            //    handler testHandler = new handler(gameState);
-            //    text_block.Text = testHandler.IsCaptured((0, 0)).ToString();
-            //}
-            testLib();
-        }
-        private void testLib()
-        {
-            GameState test = new GameState(Player.Black, new Go_Board(9));
-            test.Board.Add_Stone((0, 0), Player.Black);
-            test.Board.Add_Stone((1, 0), Player.Black);
-            test.Board.Add_Stone((1, 1), Player.Black);
-            test.Board.Add_Stone((1, 2), Player.Black);
-            test.Board.Add_Stone((0, 2), Player.Black);
-            test.Board.Add_Stone((0, 3), Player.White);
-            test.Board.Add_Stone((1, 3), Player.White);
-            test.Board.Add_Stone((2, 2), Player.White);
-            test.Board.Add_Stone((2, 1), Player.White);
-            test.Board.Add_Stone((2, 0), Player.White);
-            LibritiesHandler testHandler = new LibritiesHandler(test);
-            text_block.Text = testHandler.IsCaptured((0, 0)).ToString();
+            endOfGame = true;
+            if (endOfGame)
+            {
+                EndGame(EndType.resign);
+            }
         }
     }
 }

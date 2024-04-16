@@ -10,6 +10,8 @@ namespace Go_Logic
     {
         Normal,
         Ko,
+        suicide,
+        legal_suicide,
         Restricted,
 
     }

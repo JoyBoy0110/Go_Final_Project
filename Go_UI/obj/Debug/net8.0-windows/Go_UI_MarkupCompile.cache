@@ -10,11 +10,11 @@ none
 false
 TRACE;DEBUG;NET;NET8_0;NETCOREAPP
 C:\Users\naorb\source\repos\goFinalProject\Go_UI\App.xaml
-2123045898
+3-770092316
 
-7632268900
+8681129244
 199-1651152054
-GamePage.xaml;MainWindow.xaml;
+UIs\EndScreen.xaml;UIs\GamePage.xaml;UIs\MainWindow.xaml;
 
-False
+True
 

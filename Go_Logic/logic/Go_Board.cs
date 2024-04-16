@@ -46,20 +46,42 @@
             return coordinates.Item1 < size && coordinates.Item1 >= 0 && coordinates.Item2 < size && coordinates.Item2 >= 0;
         }
 
-
-        public override bool Equals(object obj)
+        /// <summary>
+        /// retuns true if the piece is not on the edge of the board
+        /// </summary>
+        /// <param name=""></param>
+        /// <param name=""></param>
+        /// <returns></returns>
+        public bool NotAnEdge((int, int) coordinates)
         {
-            return obj is Go_Board board && size == board.size;
+            return coordinates.Item1 != 0 && coordinates.Item1 != size - 1 && coordinates.Item2 != 0 && coordinates.Item2 != size - 1;
         }
 
-        public override int GetHashCode()
+    public override bool Equals(object obj)
         {
-            int hashCode = 774960232;
-            hashCode = hashCode * -1521134295 + EqualityComparer<Dictionary<(int,int), Player>>.Default.GetHashCode(board_dict);
-            hashCode = hashCode * -1521134295 + size.GetHashCode();
-            return hashCode;
+            if(obj == null || GetType() != obj.GetType())
+            {
+                return false;
+            }
+            Go_Board Oboard = (Go_Board)obj;
+            return size == Oboard.size && Board_Equal(Oboard);
         }
 
+        public bool Board_Equal(Go_Board board)
+        {
+            if (board_dict.Count != board.board_dict.Count)
+            {
+                return false;
+            }
+            foreach ((int,int) key in board_dict.Keys)
+            {
+                if (!board.board_dict.ContainsKey(key) || board.board_dict[key] != board_dict[key])
+                {
+                    return false;
+                }
+            }
+            return true;
+        }
         public Go_Board Copy()
         {
             Go_Board copy = new Go_Board(this.size);

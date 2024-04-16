@@ -28,11 +28,9 @@ namespace Go_UI
         /// <param name="e"></param>
         private void Play_Click(object sender, RoutedEventArgs e)
         {
-            GamePage gp = new GamePage();
+            GamePage gp = new GamePage(6.5);
             this.Close();
             gp.ShowDialog();
-
-            //Frame.Navigate(typeof(GamePage));
         }
 
         /// <summary>

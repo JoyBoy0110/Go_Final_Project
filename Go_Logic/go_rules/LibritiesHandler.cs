@@ -1,24 +1,21 @@
 ﻿namespace Go_Logic
 {
-    public class LibritiesHandler
+    public class LibritiesHandler : RulesHandler
     {
-        private (int, int)[] directions = {
-            new (0, -1),
-            new (-1, 0),
-            new (0, 1),
-            new (1, 0) };
-
-        private GameState state;
-
-        public LibritiesHandler(GameState state)
+        
+        public LibritiesHandler(GameState state) : base(state)
         {
-            this.state = state;
         }
 
-        // check if a group is captured, if it is return true, else return false
+        /// <summary>
+        /// check if a group is captured, if it is return true, else return false
+        /// </summary>
+        /// <param name="group"></param>
+        /// <returns></returns>
+        /// <exception cref="Exception"></exception>
         public bool IsCaptured(Dictionary<(int, int), Player> group)
         {
-            int liberties = GetLibertiesOfGroup(group);
+            int liberties = GetNumberOfLibertiesOfGroup(group);
             if (liberties < 0 || liberties > 4 * group.Count)
             {
                 throw new Exception("Invalid number of liberties: need to check code");
@@ -30,7 +27,13 @@
             }
             return false;
         }
-        public int GetLibertiesOfGroup(Dictionary<(int, int), Player> group)// 1 stone is also a group
+
+        /// <summary>
+        /// gets a group and returns the number of liberties of a group
+        /// </summary>
+        /// <param name="group"></param>
+        /// <returns></returns>
+        public int GetNumberOfLibertiesOfGroup(Dictionary<(int, int), Player> group)// 1 stone is also a group
         {
             List<Dictionary<(int, int), Player>> libritiesList = new List<Dictionary<(int, int), Player>>();
             int liberties = 0, index = 0;
@@ -49,6 +52,7 @@
             }
             return liberties;
         }
+        
         private bool GroupNotContaintsLibrity(List<Dictionary<(int, int), Player>> allLibrities, (int, int) cord)
         {
             for (int index = 0; index < allLibrities.Count - 1; index++)
@@ -64,6 +68,34 @@
             }
             return true;
         }
+
+        /// <summary>
+        /// gets a group and returns a dictionary contains the librities of that group
+        /// </summary>
+        /// <param name="group"></param>
+        /// <returns></returns>
+        public Dictionary<(int, int), Player> GetLibritiesOfGroup(Dictionary<(int, int), Player> group)
+        {
+            Dictionary<(int, int), Player> groupLibrities_dict = new Dictionary<(int, int), Player>();
+            foreach ((int, int) coord in group.Keys)
+            {
+                Dictionary<(int, int), Player> librities = Get_Librities(coord);
+                foreach ((int, int) cord in librities.Keys)
+                {
+                    if (!groupLibrities_dict.ContainsKey(cord))
+                    {
+                        groupLibrities_dict.Add(cord, librities[cord]);
+                    }
+                }
+            }
+            return groupLibrities_dict;
+        }
+
+        /// <summary>
+        /// gets a coordinate and returns a dictionary contains the liberties of that coordinate
+        /// </summary>
+        /// <param name="cord"></param>
+        /// <returns></returns>
         public Dictionary<(int, int), Player> Get_Librities((int, int) cord)
         {
             Dictionary<(int, int), Player> librity_dict = new Dictionary<(int, int), Player>();

@@ -1,26 +1,18 @@
 ﻿namespace Go_Logic
 {
-    public class GroupHandler
+    public class GroupHandler : RulesHandler
     {
-        private (int, int)[] directions = {
-            new (0, -1),
-            new (-1, 0),
-            new (0, 1),
-            new (1, 0) };
-
-        private GameState state;
-
-        public GroupHandler(GameState state)
+        public GroupHandler(GameState state) : base(state)
         {
-            this.state = state;
         }
 
         public List<Dictionary<(int, int), Player>> GetGroups()
         {
-            bool flag = false;
+            bool flag;
             List<Dictionary<(int, int), Player>> groups = new List<Dictionary<(int, int), Player>>();
             foreach ((int, int) coord in this.state.Board.board_dict.Keys)
             {
+                flag = true;
                 foreach (Dictionary<(int, int), Player> group in groups)
                 {
                     if (group.ContainsKey(coord))
@@ -37,7 +29,7 @@
             return groups;
         }
 
-        private Dictionary<(int, int), Player> GetGroup((int, int) coord, Player color)
+        public Dictionary<(int, int), Player> GetGroup((int, int) coord, Player color)
         {
             return GetGroup(coord, color, new Dictionary<(int, int), Player>());
         }
