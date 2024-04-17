@@ -183,7 +183,9 @@ namespace Go_UI
         
         private void EndGame(EndType end)
         {
-            
+            EndScreen gp = new EndScreen(end, this.gameState.GetWinner(end), this.gameState.GetScores());
+            this.Close();
+            gp.ShowDialog();
         }
 
         /// <summary>

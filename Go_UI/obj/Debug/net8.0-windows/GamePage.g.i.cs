@@ -133,7 +133,7 @@ namespace Go_UI {
                 return;
             }
             _contentLoaded = true;
-            System.Uri resourceLocater = new System.Uri("/Go_UI;V1.0.0.0;component/gamepage.xaml", System.UriKind.Relative);
+            System.Uri resourceLocater = new System.Uri("/Go_UI;component/gamepage.xaml", System.UriKind.Relative);
             
             #line 1 "..\..\..\GamePage.xaml"
             System.Windows.Application.LoadComponent(this, resourceLocater);

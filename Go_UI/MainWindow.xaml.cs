@@ -28,7 +28,7 @@ namespace Go_UI
         /// <param name="e"></param>
         private void Play_Click(object sender, RoutedEventArgs e)
         {
-            GamePage gp = new GamePage(6.5);
+            SelectKomi gp = new SelectKomi();
             this.Close();
             gp.ShowDialog();
         }

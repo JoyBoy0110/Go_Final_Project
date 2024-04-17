@@ -142,17 +142,29 @@
         }
 
         /// <summary>
+        /// returns the scores of the game with a tuple of the black score and the white score
+        /// </summary>
+        /// <returns></returns>
+        public (double, double) GetScores()
+        {
+            endGameHandler = new EndGameHandler(this);
+            double bScore = endGameHandler.SimpleCalculateScore(Player.Black);
+            double wScore = endGameHandler.SimpleCalculateScore(Player.White);
+            return (bScore, wScore);
+        }
+
+        /// <summary>
         /// a method that passes the turn, if both players pass the game ends
         /// </summary>
         /// <returns></returns>
         public bool Pass()
         {
             Update();
-            if(EndGame())
+            AddCupturedStone(Player);
+            if (EndGame())
             {
                 return true;
             }
-            AddCupturedStone(Player);
             Switch();
             return false;
         }
