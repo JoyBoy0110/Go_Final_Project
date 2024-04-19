@@ -11,7 +11,7 @@
             this.board_dict = new Dictionary<(int, int), Player>();
         }
 
-        public void Add_Stone((int,int) coordinates, Player color)
+        public void Add_Stone((int, int) coordinates, Player color)
         {
             board_dict.Add(coordinates, color);
         }
@@ -21,7 +21,7 @@
             return size;
         }
 
-        public bool Check_empty((int,int) coordinates)
+        public bool Check_empty((int, int) coordinates)
         {
             return board_dict.ContainsKey(coordinates);
         }
@@ -31,7 +31,7 @@
         /// </summary>
         /// <param name="coordinates"></param>
         /// <returns></returns>
-        public bool IsOccupied((int,int) coordinates)
+        public bool IsOccupied((int, int) coordinates)
         {
             return board_dict.ContainsKey(coordinates);
         }
@@ -41,7 +41,7 @@
         /// </summary>
         /// <param name="coordinates"></param>
         /// <returns></returns>
-        public bool IsInside((int,int) coordinates)
+        public bool IsInside((int, int) coordinates)
         {
             return coordinates.Item1 < size && coordinates.Item1 >= 0 && coordinates.Item2 < size && coordinates.Item2 >= 0;
         }
@@ -57,9 +57,9 @@
             return coordinates.Item1 != 0 && coordinates.Item1 != size - 1 && coordinates.Item2 != 0 && coordinates.Item2 != size - 1;
         }
 
-    public override bool Equals(object obj)
+        public override bool Equals(object obj)
         {
-            if(obj == null || GetType() != obj.GetType())
+            if (obj == null || GetType() != obj.GetType())
             {
                 return false;
             }
@@ -73,7 +73,7 @@
             {
                 return false;
             }
-            foreach ((int,int) key in board_dict.Keys)
+            foreach ((int, int) key in board_dict.Keys)
             {
                 if (!board.board_dict.ContainsKey(key) || board.board_dict[key] != board_dict[key])
                 {
@@ -84,8 +84,12 @@
         }
         public Go_Board Copy()
         {
+            if (this == null)
+            {
+                return null;
+            }
             Go_Board copy = new Go_Board(this.size);
-            foreach ((int,int) key in this.board_dict.Keys)
+            foreach ((int, int) key in this.board_dict.Keys)
             {
                 copy.board_dict.Add(key, this.board_dict[key]);
             }

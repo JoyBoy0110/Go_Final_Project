@@ -35,7 +35,9 @@ namespace Go_UI
 
         private void AIvP_Click(object sender, RoutedEventArgs e)
         {
-
+            SelectColor page = new SelectColor(komi);
+            this.Close();
+            page.ShowDialog();
         }
 
         private void PvP_Click(object sender, RoutedEventArgs e)

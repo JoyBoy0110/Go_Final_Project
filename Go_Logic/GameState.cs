@@ -1,9 +1,13 @@
 ﻿namespace Go_Logic
 {
+    public enum ActionType
+    {
+        Add, Remove, Pass, Check, None
+    }
     public class GameState
     {
         public Go_Board Board { get; private set; }// the game board
-        public Player Player { get; private set;}// the color of the current player
+        public Player Player { get; private set; }// the color of the current player
         private int boardSize;// the size of the board
         private double komi;// the advantage that the white player gets at the end of the game
 
@@ -13,7 +17,7 @@
         public double blackScore { get; private set; }// a field that keeps track of the score that the black player has achived at the end of the game 
         public double whiteScore { get; private set; }// a field that keeps track of the score that the white player has achived at the end of the game
 
-        public List<Dictionary<(int,int), Player>> boardGroups { get; private set; }
+        public List<Dictionary<(int, int), Player>> boardGroups { get; private set; }
         private LibritiesHandler libritiesHandler;
         private GroupHandler groupHandler;
         private CuptureHandler cuptureHandler;
@@ -21,6 +25,7 @@
         private EndGameHandler endGameHandler;
 
         public Go_Board[] versions;// the last two versions of the board
+        private ((int, int), Player) lastMove;// the last move that was made
 
         /// <summary>
         /// constructor for the game state, initialize all the components
@@ -39,8 +44,9 @@
             whiteScore = this.komi;
             boardGroups = new List<Dictionary<(int, int), Player>>();
             versions = new Go_Board[2];
-            versions[0] = null;
-            versions[1] = null;
+            versions[0] = new Go_Board(9);
+            versions[1] = new Go_Board(9);
+            lastMove = ((-1, -1), Player.None);
         }
         public GameState(Go_Board board, Player starting_player, double komi)
         {
@@ -54,8 +60,9 @@
             whiteScore = this.komi;
             boardGroups = new List<Dictionary<(int, int), Player>>();
             versions = new Go_Board[2];
-            versions[0] = null;
-            versions[1] = null;
+            versions[0] = new Go_Board(9);
+            versions[1] = new Go_Board(9);
+            lastMove = ((-1, -1), Player.None);
         }
 
         public int DecreaseStone()
@@ -92,7 +99,7 @@
             }
             return false;
         }
-        
+
         /// <summary>
         /// addes a point to the score to the player that cuptured the stone
         /// </summary>
@@ -159,7 +166,7 @@
         /// <returns></returns>
         public bool Pass()
         {
-            Update();
+            Update(ActionType.Pass, (-1,-1));
             AddCupturedStone(Player);
             if (EndGame())
             {
@@ -176,7 +183,7 @@
         {
             Player = Player.Opponnent();
         }
-        
+
         /// <summary>
         /// checks if a stone can be added to the board by the counter of the reamaing stones
         /// </summary>
@@ -194,10 +201,12 @@
             }
         }
 
-        public void Update()
+        public void Update(ActionType action, (int, int) coords)
         {
             //psudo code
             // save past board
+            //do action
+            // --update--
             // update groups
             // get librities
             // check if any group is captured
@@ -205,6 +214,20 @@
             //get the new board
             // update main board with updated board
             SaveVersions();
+            switch (action)
+            {
+                case ActionType.Add:
+                    Board.Add_Stone(coords, Player);
+                    break;
+                case ActionType.Remove:
+                    break;
+                case ActionType.Pass:
+                    break;
+                case ActionType.None:
+                    break;
+                default:
+                    break;
+            }
             groupHandler = new GroupHandler(this);
             libritiesHandler = new LibritiesHandler(this);
             boardGroups = groupHandler.GetGroups();
@@ -220,36 +243,52 @@
                     }
                 }
             }
+            lastMove = (coords, Player);
         }
-        
+
         /// <summary>
         /// add a stone to the board if possible (if the placing is equal to legal suicide or normal)
         /// if possible add to board and return true if not dont add and return false
         /// </summary>
         /// <param name="cord"></param>
         /// <returns></returns>
-        public bool AddStone((int, int) cord)
+        public bool AddStone((int, int) coords)
         {
+            SaveVersions();
             placingHandler = new PlacingHandler(this);
-            PlaceType placeType = placingHandler.EvaluatePlace(cord, Player);
+            PlaceType placeType = placingHandler.EvaluatePlace(coords, Player);
             if (placeType != PlaceType.Normal && placeType != PlaceType.legal_suicide)
             {
                 return false;
             }
-            Board.Add_Stone(cord, Player);
-            Update();
+            Update(ActionType.Add, coords);
             return true;
         }
 
         public bool IsKo((int, int) cord, Player color)
         {
             Go_Board temp = Board.Copy();
-            temp.Add_Stone(cord, color); 
-            if (versions[0] == null)
+            Go_Board[] versionsTemp = new Go_Board[2];
+            versionsTemp[0] = versions[0].Copy();
+            versionsTemp[1] = versions[1].Copy();
+            bool flag = false;
+            Board.Add_Stone(cord, color);
+            Update(ActionType.Check, cord);
+            if (versions[1].Equals(new Go_Board(9)))
             {
-                return false;
+                versions = versionsTemp;
+                Board = temp;
+                return flag;
             }
-            return versions[0].Equals(temp);
+            flag = versions[1].Equals(Board);
+            versions = versionsTemp;
+            Board = temp;
+            return flag;
+        }
+        
+        public ((int,int),Player) GetLastMove()
+        {
+            return lastMove;
         }
 
         public bool IsLegalSuicide((int, int) cord, Player color)
@@ -263,7 +302,7 @@
             temp.libritiesHandler = new LibritiesHandler(temp);
             temp.Board.Add_Stone(cord, Player);
             int flag = temp.libritiesHandler.GetNumberOfLibertiesOfGroup(temp.groupHandler.GetGroup(cord, Player));
-            temp.Update();
+            temp.Update(ActionType.Check, (-1, -1));
             if (temp.libritiesHandler.GetNumberOfLibertiesOfGroup(temp.groupHandler.GetGroup(cord, Player)) != 0 && flag == 0)
             {
                 return true;
@@ -296,7 +335,7 @@
             versions[1] = versions[0];
             versions[0] = Board.Copy();
         }
-        
+
         /// <summary>
         /// returns a copy of the game state
         /// </summary>

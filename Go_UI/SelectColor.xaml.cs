@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Go_Logic;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -19,9 +20,32 @@ namespace Go_UI
     /// </summary>
     public partial class SelectColor : Window
     {
-        public SelectColor()
+        private double komi;
+        public SelectColor(double komi)
         {
             InitializeComponent();
+            this.komi = komi;
+        }
+
+        private void BlackChose_Click(object sender, RoutedEventArgs e)
+        {
+            AIGamePage page = new AIGamePage(komi, Player.Black);
+            this.Close();
+            page.ShowDialog();
+        }
+
+        private void WhiteChose_Click(object sender, RoutedEventArgs e)
+        {
+            AIGamePage page = new AIGamePage(komi, Player.White);
+            this.Close();
+            page.ShowDialog();
+        }
+
+        private void BackButton_Click(object sender, RoutedEventArgs e)
+        {
+            AIChoose page = new AIChoose(komi);
+            this.Close();
+            page.ShowDialog();
         }
     }
 }

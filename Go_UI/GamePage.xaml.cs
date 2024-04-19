@@ -106,7 +106,7 @@ namespace Go_UI
         {
             bool flag = false;
             (int, int) placeCordinates = ToGridCordinates(position);
-            if (!gameState.CanAdd() || gameState.Board.IsOccupied(placeCordinates))
+            if (!gameState.CanAdd() || gameState.Board.IsOccupied(placeCordinates) || gameState.GetLastMove() == (placeCordinates, gameState.Player))
             {
                 //MessageBox.Show("You can't add more stones");
                 return;
@@ -136,16 +136,6 @@ namespace Go_UI
                 int col = hoverCordinates.Item2;
                 HoverImages[row, col].Source = null;
             }
-        }
-
-        private Image CloneImage(Image orginal)
-        {
-            Image temp = new Image();
-            temp.Source = orginal.Source;
-            temp.Width = orginal.Width;
-            temp.Height = orginal.Height;
-            temp.Opacity = orginal.Opacity;
-            return temp;
         }
 
         private void Board_MouseLeave(object sender, MouseEventArgs e)
