@@ -30,7 +30,7 @@ namespace Go_AI
             // then choose the the one resulting in less liberties
             //
             // 5. Match patterns to build strong shape, if found any
-            // consider that instead of chasing the group
+            // consider that instead of ch  asing the group
             //
 
             GroupHandler groupHandler = new GroupHandler(gamestate);
@@ -39,6 +39,10 @@ namespace Go_AI
             GameState copy = gamestate.Copy();
             GameState temp = null;
             (int, int) bestMove = (-1, -1);
+            (int, int) defendGroup = (-1, -1); // for the first case
+            (int, int) attackGroup = (-1, -1); // for the second case
+            (int, int) freeGroup = (-1, -1); // for the third case
+            (int, int) surroundGroup = (-1, -1); // for the fourth case
             int maxSize;
             int numOfLibrities;
             Dictionary<(int, int), Player> librities;
@@ -51,14 +55,9 @@ namespace Go_AI
                 if (group[group.Keys.First()] == this.gamestate.Player && libritiesHandler.GetNumberOfLibertiesOfGroup(group) == 1 &&
                     this.gamestate.Board.NotAnEdge(libritiesHandler.GetLibritiesOfGroup(group).Keys.First()) && group.Count >= maxSize)
                 {
-                    bestMove = libritiesHandler.GetLibritiesOfGroup(group).Keys.First();
+                    defendGroup = libritiesHandler.GetLibritiesOfGroup(group).Keys.First();
                     maxSize = group.Count;
                 }
-            }
-
-            if (bestMove != (-1, -1))
-            {
-                return bestMove;
             }
 
             // 2. If opponent's group have only one liberty left and it has the best point value
@@ -68,14 +67,9 @@ namespace Go_AI
                 //if the color of the group is oposite to the player and the group has only one liberty
                 if (group[group.Keys.First()] == this.gamestate.Player.Opponnent() && libritiesHandler.GetNumberOfLibertiesOfGroup(group) == 1 && group.Count >= maxSize)
                 {
-                    bestMove = libritiesHandler.GetLibritiesOfGroup(group).Keys.First();
+                    attackGroup = libritiesHandler.GetLibritiesOfGroup(group).Keys.First();
                     maxSize = group.Count;
                 }
-            }
-
-            if (bestMove != (-1, -1))
-            {
-                return bestMove;
             }
 
             // 3. If the group of the computer has two liberties
@@ -98,27 +92,22 @@ namespace Go_AI
                             if (tempNumOfLib > numOfLibrities)
                             {
                                 numOfLibrities = tempNumOfLib;
-                                bestMove = coord;
+                                freeGroup = coord;
+                                maxSize = group.Count;
                             }
                         }
                     }
-                    maxSize = group.Count;
                 }
             }
-
-            if (bestMove != (-1, -1))
-            {
-                return bestMove;
-            }
-
+            
             // 4. If the group of the oponnent has two liberties
             // then choose the the one resulting in less liberties
             maxSize = 0;
             foreach (Dictionary<(int, int), Player> group in copy.boardGroups)
             {
-                numOfLibrities = 0;
+                numOfLibrities = 4;
                 //if the color of the group is the player color and the group has two liberties
-                if (group[group.Keys.First()] == this.gamestate.Player && libritiesHandler.GetNumberOfLibertiesOfGroup(group) == 2 && group.Count >= maxSize)
+                if (group[group.Keys.First()] == this.gamestate.Player.Opponnent() && libritiesHandler.GetNumberOfLibertiesOfGroup(group) >= 2 && group.Count >= maxSize)
                 {
                     librities = libritiesHandler.GetLibritiesOfGroup(group);
                     foreach ((int, int) coord in librities.Keys)
@@ -128,30 +117,46 @@ namespace Go_AI
                         if (flag)
                         {
                             int tempNumOfLib = libritiesHandler.GetNumberOfLibertiesOfGroup(groupHandler.GetGroup(coord, temp.Player));
-                            if (tempNumOfLib > numOfLibrities)
+                            if (tempNumOfLib < numOfLibrities)
                             {
                                 numOfLibrities = tempNumOfLib;
-                                bestMove = coord;
+                                surroundGroup = coord;
+                                maxSize = group.Count;
                             }
                         }
                     }
-                    maxSize = group.Count;
                 }
             }
-
-
+            
             //temporary
-            temp = copy.Copy();
-            System.Random random = new System.Random();
-            int x = random.Next(size);
-            int y = random.Next(size);
-            while (!temp.AddStone((x, y)))
-            {
-                x = random.Next(size);
-                y = random.Next(size);
-            }
-            bestMove = (x, y);
+            //temp = copy.Copy();
+            //System.Random random = new System.Random();
+            //int x = random.Next(size);
+            //int y = random.Next(size);
+            //while (!temp.AddStone((x, y)))
+            //{
+            //    x = random.Next(size);
+            //    y = random.Next(size);
+            //}
+            //bestMove = (x, y);
             //end of temporary
+
+            if (defendGroup != (-1, -1))
+            {
+                bestMove = defendGroup;
+            }
+            else if (attackGroup != (-1, -1))
+            {
+                bestMove = attackGroup;
+            }
+            else if (freeGroup != (-1, -1))
+            {
+                bestMove = freeGroup;
+            }
+            else if (surroundGroup != (-1, -1))
+            {
+                bestMove = surroundGroup;
+            }
 
             return bestMove;
         }

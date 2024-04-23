@@ -116,10 +116,7 @@ namespace Go_UI
             if (Enable)
             {
                 Point mousePosition = e.GetPosition(PiecesGrid);
-                if (!Handle_A_Move(mousePosition))
-                {
-                    endOfGame = gameState.EndGame();
-                }
+                Handle_A_Move(mousePosition);
             }
             if(endOfGame)
             {
@@ -127,16 +124,19 @@ namespace Go_UI
             }
         }
 
-        private bool Handle_A_Move(Point position)
+        private void Handle_A_Move(Point position)
         {
             bool flag = false;
             (int, int) placeCordinates = ToGridCordinates(position);
             if (!gameState.CanAdd() || gameState.Board.IsOccupied(placeCordinates) || gameState.GetLastMove() == (placeCordinates, gameState.Player))
             {
-                return flag;
+                //MessageBox.Show("You can't add more stones");
+                return;
             }
             if (placeCordinates != (-1, -1))
             {
+                int row = hoverCordinates.Item1;
+                int col = hoverCordinates.Item2;
                 if (gameState.AddStone(placeCordinates))
                 {
                     flag = true;
@@ -146,9 +146,8 @@ namespace Go_UI
             if (flag)
             {
                 DrawCurrentBoard(gameState.Board);
-                Switch_Turn(false); 
+                Switch_Turn(false);
             }
-            return flag;
         }
 
         private void Handle_AI_Move()
@@ -198,7 +197,7 @@ namespace Go_UI
                 gameState.Switch();
             }
             Set_Cursor(gameState.Player);
-            if (gameState.Player != AiColor)
+            if (gameState.Player.Opponnent() == AiColor)
             {
                 Enable = true;
             }
@@ -243,7 +242,9 @@ namespace Go_UI
         private void Pass()
         {
             endOfGame = gameState.Pass();
-            if(gameState.Player != AiColor)
+            if(gameState.Player.Opponnent() == AiColor)
+                Switch_Turn(false);
+            if (gameState.Player == AiColor)
                 Switch_Turn(true);
             if (endOfGame)
             {
