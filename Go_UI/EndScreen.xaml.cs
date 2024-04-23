@@ -14,13 +14,13 @@ namespace Go_UI
             string endMessage = "", winnerMessage = "";
             switch (end)
             {
-                case EndType.resign:
+                case EndType.Resign:
                     endMessage = PlayerExtensions.Opponnent(winner).ToString() + " Resigned";
                     break;
-                case EndType.material:
+                case EndType.Material:
                     endMessage = "Win By Material";
                     break;
-                case EndType.pass:
+                case EndType.Pass:
                     endMessage = "Win By Two Consecutive Passes";
                     break;
             }

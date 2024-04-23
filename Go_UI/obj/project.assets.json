@@ -2,6 +2,19 @@
   "version": 3,
   "targets": {
     "net8.0-windows7.0": {
+      "Go_AI/1.0.0": {
+        "type": "project",
+        "framework": ".NETCoreApp,Version=v8.0",
+        "dependencies": {
+          "Go_Logic": "1.0.0"
+        },
+        "compile": {
+          "bin/placeholder/Go_AI.dll": {}
+        },
+        "runtime": {
+          "bin/placeholder/Go_AI.dll": {}
+        }
+      },
       "Go_Logic/1.0.0": {
         "type": "project",
         "framework": ".NETCoreApp,Version=v8.0",
@@ -15,6 +28,11 @@
     }
   },
   "libraries": {
+    "Go_AI/1.0.0": {
+      "type": "project",
+      "path": "../Go_AI/Go_AI.csproj",
+      "msbuildProject": "../Go_AI/Go_AI.csproj"
+    },
     "Go_Logic/1.0.0": {
       "type": "project",
       "path": "../Go_Logic/Go_Logic.csproj",
@@ -23,6 +41,7 @@
   },
   "projectFileDependencyGroups": {
     "net8.0-windows7.0": [
+      "Go_AI >= 1.0.0",
       "Go_Logic >= 1.0.0"
     ]
   },
@@ -59,6 +78,9 @@
         "net8.0-windows7.0": {
           "targetAlias": "net8.0-windows",
           "projectReferences": {
+            "C:\\Users\\naorb\\source\\repos\\goFinalProject\\Go_AI\\Go_AI.csproj": {
+              "projectPath": "C:\\Users\\naorb\\source\\repos\\goFinalProject\\Go_AI\\Go_AI.csproj"
+            },
             "C:\\Users\\naorb\\source\\repos\\goFinalProject\\Go_Logic\\Go_Logic.csproj": {
               "projectPath": "C:\\Users\\naorb\\source\\repos\\goFinalProject\\Go_Logic\\Go_Logic.csproj"
             }

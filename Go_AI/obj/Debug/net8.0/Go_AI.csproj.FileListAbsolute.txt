@@ -1,0 +1,16 @@
+C:\Users\naorb\source\repos\goFinalProject\Go_AI\bin\Debug\net8.0\Go_AI.deps.json
+C:\Users\naorb\source\repos\goFinalProject\Go_AI\bin\Debug\net8.0\Go_AI.dll
+C:\Users\naorb\source\repos\goFinalProject\Go_AI\bin\Debug\net8.0\Go_AI.pdb
+C:\Users\naorb\source\repos\goFinalProject\Go_AI\bin\Debug\net8.0\Go_Logic.dll
+C:\Users\naorb\source\repos\goFinalProject\Go_AI\bin\Debug\net8.0\Go_Logic.pdb
+C:\Users\naorb\source\repos\goFinalProject\Go_AI\obj\Debug\net8.0\Go_AI.csproj.AssemblyReference.cache
+C:\Users\naorb\source\repos\goFinalProject\Go_AI\obj\Debug\net8.0\Go_AI.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\naorb\source\repos\goFinalProject\Go_AI\obj\Debug\net8.0\Go_AI.AssemblyInfoInputs.cache
+C:\Users\naorb\source\repos\goFinalProject\Go_AI\obj\Debug\net8.0\Go_AI.AssemblyInfo.cs
+C:\Users\naorb\source\repos\goFinalProject\Go_AI\obj\Debug\net8.0\Go_AI.csproj.CoreCompileInputs.cache
+C:\Users\naorb\source\repos\goFinalProject\Go_AI\obj\Debug\net8.0\Go_AI.sourcelink.json
+C:\Users\naorb\source\repos\goFinalProject\Go_AI\obj\Debug\net8.0\Go_AI.csproj.Up2Date
+C:\Users\naorb\source\repos\goFinalProject\Go_AI\obj\Debug\net8.0\Go_AI.dll
+C:\Users\naorb\source\repos\goFinalProject\Go_AI\obj\Debug\net8.0\refint\Go_AI.dll
+C:\Users\naorb\source\repos\goFinalProject\Go_AI\obj\Debug\net8.0\Go_AI.pdb
+C:\Users\naorb\source\repos\goFinalProject\Go_AI\obj\Debug\net8.0\ref\Go_AI.dll

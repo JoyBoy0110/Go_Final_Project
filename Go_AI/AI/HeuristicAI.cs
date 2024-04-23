@@ -1,14 +1,8 @@
 ﻿using Go_Logic;
-using System;
-using System.Collections.Generic;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Go_AI
 {
-    public class HeuristicAI
+    public class HeuristicAI : IAI
     {
         private GameState gamestate;
         public HeuristicAI(GameState gamestate)
@@ -20,46 +14,6 @@ namespace Go_AI
             this.gamestate = state;
         }
 
-
-        //public int CalculateScore(GameState state)
-        //{
-        //    int score = 0;
-        //    score += CalculateTerritory(state.Player);
-        //    score += CalculateLiberties(state.Player);
-        //    return score;
-        //}
-        //public int CalculateTerritory(Player color)
-        //{
-        //    int territory = 0;
-        //    List<Dictionary<(int, int), Player>> groups = new GroupHandler(this.gamestate).GetGroups();
-        //    foreach (Dictionary<(int, int), Player> group in groups)
-        //    {
-        //        if (group.Values.First() == color)
-        //        {
-        //            territory += group.Count;
-        //        }
-        //    }
-        //    return territory;
-        //}
-
-
-
-        //peusodo code:
-
-        // 1. If the group of the side to move has only one liberty
-        // then save it by putting a stone there unless it's a board edge
-        //
-        // 2. If opponent's group have only one liberty left
-        //   then capture it
-        //
-        // 3. If the group of the computer has two liberties
-        // then choose the the one resulting in more liberties
-        //
-        // 4. If opponent's group have more than one liberty
-        // then try to surround it
-        //
-        // 5. Match patterns to build strong shape, if found any
-        // consider that instead of chasing the group
 
         public (int, int) GetMove()
         {
@@ -83,6 +37,7 @@ namespace Go_AI
             LibritiesHandler libritiesHandler = new LibritiesHandler(gamestate);
             int size = gamestate.Board.Get_size();
             GameState copy = gamestate.Copy();
+            GameState temp = null;
             (int, int) bestMove = (-1, -1);
             int maxSize;
             int numOfLibrities;
@@ -135,7 +90,7 @@ namespace Go_AI
                     librities = libritiesHandler.GetLibritiesOfGroup(group);
                     foreach ((int, int) coord in librities.Keys)
                     {
-                        GameState temp = copy.Copy();
+                        temp = copy.Copy();
                         bool flag = temp.AddStone(coord);
                         if (flag)
                         {
@@ -168,7 +123,7 @@ namespace Go_AI
                     librities = libritiesHandler.GetLibritiesOfGroup(group);
                     foreach ((int, int) coord in librities.Keys)
                     {
-                        GameState temp = copy.Copy();
+                        temp = copy.Copy();
                         bool flag = temp.AddStone(coord);
                         if (flag)
                         {
@@ -185,17 +140,20 @@ namespace Go_AI
             }
 
 
-
+            //temporary
+            temp = copy.Copy();
+            System.Random random = new System.Random();
+            int x = random.Next(size);
+            int y = random.Next(size);
+            while (!temp.AddStone((x, y)))
+            {
+                x = random.Next(size);
+                y = random.Next(size);
+            }
+            bestMove = (x, y);
+            //end of temporary
 
             return bestMove;
         }
-
-        public int CalculateLiberties((int, int) coord)
-        {
-            int liberties = 0;
-            this.gamestate.AddStone(coord);
-            return liberties;
-        }
-
     }
 }

@@ -2,9 +2,10 @@
 {
     public enum EndType
     {
-        pass,
-        resign,
-        material
+        Pass,
+        Resign,
+        Material,
+        None
     }
     public class EndGameHandler : RulesHandler
     {
@@ -20,7 +21,7 @@
         /// <returns></returns>
         public Player EndGame(EndType type)
         {
-            if (type == EndType.pass || type == EndType.material)
+            if (type == EndType.Pass || type == EndType.Material)
             {
                 double blackScore = SimpleCalculateScore(Player.Black), whiteScore = SimpleCalculateScore(Player.White);   
                 if(blackScore == whiteScore)
@@ -31,7 +32,7 @@
                     return Player.Black;
 
             }
-            if (type == EndType.resign)
+            if (type == EndType.Resign)
             {
                 return this.state.Player.Opponnent();
             }

@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("Go_AI")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+3b72726e804e433e40b0660ec9ef01e55b789e83")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+0e1cb715c0fa02a86aece8241b20ee4b0894c973")]
 [assembly: System.Reflection.AssemblyProductAttribute("Go_AI")]
 [assembly: System.Reflection.AssemblyTitleAttribute("Go_AI")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

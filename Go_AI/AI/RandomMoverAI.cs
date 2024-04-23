@@ -2,7 +2,7 @@
 
 namespace Go_AI
 {
-    public class RandomMoverAI
+    public class RandomMoverAI : IAI
     {
         private GameState gamestate;
         //create a simple constructor
@@ -17,11 +17,11 @@ namespace Go_AI
         public (int,int) GetMove()
         {
             int size = gamestate.Board.Get_size();
-            GameState temp = gamestate.Copy();
+            GameState copy = gamestate.Copy();
             System.Random random = new System.Random();
             int x = random.Next(size);
             int y = random.Next(size);
-            while (!temp.AddStone((x,y)))
+            while (!copy.AddStone((x,y)))
             {
                 x = random.Next(size);
                 y = random.Next(size);

@@ -123,17 +123,22 @@
         /// checks if the game has ended, if the game has ended returns true, if not returns false
         /// </summary>
         /// <returns></returns>
-        private bool EndGame()
+        public bool EndGame()
+        {
+            return GetEndType() != EndType.None;
+        }
+
+        public EndType GetEndType()
         {
             if (blackStoneCounter == 0 || whiteStoneCounter == 0)// no more stones to add
             {
-                return true;
+                return EndType.Material;
             }
-            if (versions[0] != null && versions[1] != null && versions[0].Equals(versions[1]))// two consecutive passes
+            if (!versions[0].Equals(new Go_Board(9)) && !versions[1].Equals(new Go_Board(9)) && versions[0].Equals(versions[1]))// two consecutive passes
             {
-                return true;
+                return EndType.Pass;
             }
-            return false;
+            return EndType.None;
         }
 
         /// <summary>

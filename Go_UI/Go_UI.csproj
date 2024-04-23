@@ -19,6 +19,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\Go_AI\Go_AI.csproj" />
     <ProjectReference Include="..\Go_Logic\Go_Logic.csproj" />
   </ItemGroup>
 

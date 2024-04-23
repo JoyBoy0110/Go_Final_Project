@@ -1,5 +1,6 @@
 ﻿using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
 using Go_Logic;
@@ -124,7 +125,7 @@ namespace Go_UI
             if (flag)
             {
                 DrawCurrentBoard(gameState.Board);
-                Switch_Turn();
+                Switch_Turn(false);
             }
         }
 
@@ -146,9 +147,10 @@ namespace Go_UI
         /// <summary>
         /// method that switches the turn of the game
         /// </summary>
-        private void Switch_Turn()
+        private void Switch_Turn(bool playerPass)
         {
-            gameState.Switch();
+            if (!playerPass)
+                gameState.Switch();
             Set_Cursor(gameState.Player);
         }
 
@@ -170,7 +172,7 @@ namespace Go_UI
                     break;
             }
         }
-        
+
         private void EndGame(EndType end)
         {
             EndScreen gp = new EndScreen(end, this.gameState.GetWinner(end), this.gameState.GetScores());
@@ -186,9 +188,10 @@ namespace Go_UI
         private void Pass_Click(object sender, RoutedEventArgs e)
         {
             endOfGame = gameState.Pass();
+            Switch_Turn(true);
             if (endOfGame)
             {
-                EndGame(EndType.pass);
+                EndGame(gameState.GetEndType());
             }
         }
 
@@ -202,7 +205,7 @@ namespace Go_UI
             endOfGame = true;
             if (endOfGame)
             {
-                EndGame(EndType.resign);
+                EndGame(EndType.Resign);
             }
         }
     }

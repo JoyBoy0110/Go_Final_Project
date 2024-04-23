@@ -35,3 +35,5 @@ C:\Users\naorb\source\repos\goFinalProject\Go_UI\obj\Debug\net8.0-windows\Select
 C:\Users\naorb\source\repos\goFinalProject\Go_UI\obj\Debug\net8.0-windows\AIGamePage.g.cs
 C:\Users\naorb\source\repos\goFinalProject\Go_UI\obj\Debug\net8.0-windows\SelectColor.baml
 C:\Users\naorb\source\repos\goFinalProject\Go_UI\obj\Debug\net8.0-windows\AIGamePage.baml
+C:\Users\naorb\source\repos\goFinalProject\Go_UI\bin\Debug\net8.0-windows\Go_AI.dll
+C:\Users\naorb\source\repos\goFinalProject\Go_UI\bin\Debug\net8.0-windows\Go_AI.pdb
