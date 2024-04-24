@@ -35,6 +35,7 @@ namespace Go_AI
 
             GroupHandler groupHandler = new GroupHandler(gamestate);
             LibritiesHandler libritiesHandler = new LibritiesHandler(gamestate);
+            PlacingHandler placingHandler = new PlacingHandler(gamestate);
             int size = gamestate.Board.Get_size();
             GameState copy = gamestate.Copy();
             GameState temp = null;
@@ -55,8 +56,12 @@ namespace Go_AI
                 if (group[group.Keys.First()] == this.gamestate.Player && libritiesHandler.GetNumberOfLibertiesOfGroup(group) == 1 &&
                     this.gamestate.Board.NotAnEdge(libritiesHandler.GetLibritiesOfGroup(group).Keys.First()) && group.Count >= maxSize)
                 {
-                    defendGroup = libritiesHandler.GetLibritiesOfGroup(group).Keys.First();
-                    maxSize = group.Count;
+                    PlaceType tempType = (placingHandler.EvaluatePlace(libritiesHandler.GetLibritiesOfGroup(group).Keys.First(), this.gamestate.Player));
+                    if (tempType == PlaceType.Normal || tempType == PlaceType.legal_suicide)
+                    {
+                        defendGroup = libritiesHandler.GetLibritiesOfGroup(group).Keys.First();
+                        maxSize = group.Count;
+                    }
                 }
             }
 
@@ -67,8 +72,12 @@ namespace Go_AI
                 //if the color of the group is oposite to the player and the group has only one liberty
                 if (group[group.Keys.First()] == this.gamestate.Player.Opponnent() && libritiesHandler.GetNumberOfLibertiesOfGroup(group) == 1 && group.Count >= maxSize)
                 {
-                    attackGroup = libritiesHandler.GetLibritiesOfGroup(group).Keys.First();
-                    maxSize = group.Count;
+                    PlaceType tempType = (placingHandler.EvaluatePlace(libritiesHandler.GetLibritiesOfGroup(group).Keys.First(), this.gamestate.Player));
+                    if (tempType == PlaceType.Normal || tempType == PlaceType.legal_suicide)
+                    {
+                        attackGroup = libritiesHandler.GetLibritiesOfGroup(group).Keys.First();
+                        maxSize = group.Count;
+                    }
                 }
             }
 
@@ -99,7 +108,7 @@ namespace Go_AI
                     }
                 }
             }
-            
+
             // 4. If the group of the oponnent has two liberties
             // then choose the the one resulting in less liberties
             maxSize = 0;
@@ -127,7 +136,7 @@ namespace Go_AI
                     }
                 }
             }
-            
+
             //temporary
             //temp = copy.Copy();
             //System.Random random = new System.Random();

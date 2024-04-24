@@ -107,9 +107,17 @@ namespace Go_UI
         {
             bool flag = false;
             (int, int) placeCordinates = ToGridCordinates(position);
-            if (!gameState.CanAdd() || gameState.Board.IsOccupied(placeCordinates) || gameState.GetLastMove() == (placeCordinates, gameState.Player))
+            if (gameState.Board.IsOccupied(placeCordinates) || gameState.GetLastMove() == (placeCordinates, gameState.Player))
             {
-                //MessageBox.Show("You can't add more stones");
+                return;
+            }
+            if (!gameState.CanAdd())
+            {
+                endOfGame = gameState.EndGame();
+                if (endOfGame)
+                {
+                    EndGame(gameState.GetEndType());
+                }
                 return;
             }
             if (placeCordinates != (-1, -1))
@@ -152,6 +160,7 @@ namespace Go_UI
             if (!playerPass)
                 gameState.Switch();
             Set_Cursor(gameState.Player);
+
         }
 
         /// <summary>

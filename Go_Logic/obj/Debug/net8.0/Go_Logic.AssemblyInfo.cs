@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("Go_Logic")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+0e1cb715c0fa02a86aece8241b20ee4b0894c973")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+9102aba412032722477deb6728f378a1c6fc3402")]
 [assembly: System.Reflection.AssemblyProductAttribute("Go_Logic")]
 [assembly: System.Reflection.AssemblyTitleAttribute("Go_Logic")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

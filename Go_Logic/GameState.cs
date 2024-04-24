@@ -10,6 +10,7 @@
         public Player Player { get; private set; }// the color of the current player
         private int boardSize;// the size of the board
         private double komi;// the advantage that the white player gets at the end of the game
+        Go_Board NullBoard = new Go_Board(9);// a null board
 
         public int blackStoneCounter { get; private set; }// a field that keeps track of how many stones left for black
         public int whiteStoneCounter { get; private set; }// a field that keeps track of how many stones left for white
@@ -34,6 +35,7 @@
         /// <param name="board"></param>
         public GameState(Go_Board board, double komi)
         {
+            NullBoard.Add_Stone((-1, -1), Player.None);
             Player = Player.Black;
             Board = board;
             boardSize = board.Get_size();
@@ -44,12 +46,13 @@
             whiteScore = this.komi;
             boardGroups = new List<Dictionary<(int, int), Player>>();
             versions = new Go_Board[2];
-            versions[0] = new Go_Board(9);
-            versions[1] = new Go_Board(9);
+            versions[0] = NullBoard.Copy();
+            versions[1] = NullBoard.Copy();
             lastMove = ((-1, -1), Player.None);
         }
         public GameState(Go_Board board, Player starting_player, double komi)
         {
+            NullBoard.Add_Stone((-1, -1), Player.None);
             Player = starting_player;
             Board = board;
             boardSize = board.Get_size();
@@ -60,8 +63,8 @@
             whiteScore = this.komi;
             boardGroups = new List<Dictionary<(int, int), Player>>();
             versions = new Go_Board[2];
-            versions[0] = new Go_Board(9);
-            versions[1] = new Go_Board(9);
+            versions[0] = NullBoard.Copy();
+            versions[1] = NullBoard.Copy();
             lastMove = ((-1, -1), Player.None);
         }
 
@@ -128,13 +131,17 @@
             return GetEndType() != EndType.None;
         }
 
+        /// <summary>
+        /// returns the type of the end of the game, if the game ended because of a pass, material or none
+        /// </summary>
+        /// <returns></returns>
         public EndType GetEndType()
         {
             if (blackStoneCounter == 0 || whiteStoneCounter == 0)// no more stones to add
             {
                 return EndType.Material;
             }
-            if (!versions[0].Equals(new Go_Board(9)) && !versions[1].Equals(new Go_Board(9)) && versions[0].Equals(versions[1]))// two consecutive passes
+            if (!versions[0].Equals(NullBoard) && !versions[1].Equals(NullBoard) && versions[0].Equals(versions[1]))// two consecutive passes
             {
                 return EndType.Pass;
             }
