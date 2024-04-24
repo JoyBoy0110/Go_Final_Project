@@ -44,6 +44,7 @@ namespace Go_AI
             (int, int) attackGroup = (-1, -1); // for the second case
             (int, int) freeGroup = (-1, -1); // for the third case
             (int, int) surroundGroup = (-1, -1); // for the fourth case
+            (int, int) pattern = (-1, -1); // for the fifth case
             int maxSize;
             int numOfLibrities;
             Dictionary<(int, int), Player> librities;
@@ -137,19 +138,95 @@ namespace Go_AI
                 }
             }
 
-            //temporary
-            //temp = copy.Copy();
-            //System.Random random = new System.Random();
-            //int x = random.Next(size);
-            //int y = random.Next(size);
-            //while (!temp.AddStone((x, y)))
-            //{
-            //    x = random.Next(size);
-            //    y = random.Next(size);
-            //}
-            //bestMove = (x, y);
-            //end of temporary
+            //5. Match patterns to build strong shape, if found any
+            // consider that instead of ch  asing the group
+            Dictionary<(int, int), Player> board = copy.Board.board_dict;
+            foreach ((int, int) coord in board.Keys)
+            {
+                if (board[coord] == copy.Player.Opponnent())
+                {
+                    int row = coord.Item1, col = coord.Item2;
 
+                    //pattern no. 1
+                    if (row > 0 && col > 0 && col < size - 1)
+                    {
+                        if (board.ContainsKey((row - 1, col - 1)) && board.ContainsKey((row - 1, col + 1)) &&
+                            board[(row - 1, col - 1)] == copy.Player && board[(row - 1, col + 1)] == copy.Player)
+                        {
+                            temp = copy.Copy();
+                            //check if can put the stone there
+                        }
+                    }
+
+                    //pattern no. 2
+                    if (row > 0 && col > 0 && col < size - 1)
+                    {
+                        if (board.ContainsKey((row - 1, col - 1)) && board.ContainsKey((row, col + 1)) &&
+                            board[(row - 1, col - 1)] == copy.Player && board[(row, col + 1)] == copy.Player)
+                        {
+                            temp = copy.Copy();
+                            //check if can put the stone there
+                        }
+                    }
+
+                    //pattern no. 3
+                    if (col > 0 && col < size - 1 && row < size - 1)
+                    {
+                        if (board.ContainsKey((row, col - 1)) && board.ContainsKey((row, col + 1)) &&
+                            board[(row, col - 1)] == copy.Player && board[(row, col + 1)] == copy.Player)
+                        {
+                            temp = copy.Copy();
+                            //check if can put the stone there
+                        }
+                    }
+
+                    //pattern no. 4
+                    if (row > 0 && col > 0 && col < size - 2)
+                    {
+                        if (board.ContainsKey((row - 1, col - 1)) && board.ContainsKey((row - 1, col + 2)) &&
+                            board[(row - 1, col - 1)] == copy.Player && board[(row - 1, col + 2)] == copy.Player)
+                        {
+                            temp = copy.Copy();
+                            //check if can put the stone there
+                        }
+                    }
+
+                    //pattern no. 5
+                    if (row > 0 && col > 1 && col < size - 2)
+                    {
+                        if (board.ContainsKey((row - 2, col - 1)) && board.ContainsKey((row - 1, col + 2)) &&
+                            board[(row - 2, col - 1)] == copy.Player && board[(row - 1, col + 2)] == copy.Player)
+                        {
+                            temp = copy.Copy();
+                            //check if can put the stone there
+                        }
+                    }
+
+                    //pattern no. 6
+                    if (col > 1 && row < size - 1)
+                    {
+                        if (board.ContainsKey((row, col - 1)) && board.ContainsKey((row + 1, col - 2)) &&
+                            board[(row, col - 1)] == copy.Player && board[(row + 1, col - 2)] == copy.Player)
+                        {
+                            temp = copy.Copy();
+                            //check if can put the stone there
+                        }
+                    }
+
+                    //pattern no. 7
+                    if (col > 1 && row > 0)
+                    {
+                        if (board.ContainsKey((row - 1, col)) && board.ContainsKey((row - 1, col - 2)) &&
+                            board[(row - 1, col)] == copy.Player && board[(row - 1, col - 2)] == copy.Player)
+                        {
+                            temp = copy.Copy();
+                            //check if can put the stone there
+                        }
+                    }
+                }
+            }
+
+            //priorities
             if (defendGroup != (-1, -1))
             {
                 bestMove = defendGroup;
@@ -165,6 +242,10 @@ namespace Go_AI
             else if (surroundGroup != (-1, -1))
             {
                 bestMove = surroundGroup;
+            }
+            else if (pattern != (-1, -1))
+            {
+                bestMove = pattern;
             }
 
             return bestMove;
