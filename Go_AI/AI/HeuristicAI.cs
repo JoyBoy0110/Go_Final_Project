@@ -32,6 +32,11 @@ namespace Go_AI
             // 5. Match patterns to build strong shape, if found any
             // consider that instead of ch  asing the group
             //
+            // 6. If none of the above apply, choose a random move
+            //
+            // 7. if there isn't a legal move, pass
+            //
+            //
 
             GroupHandler groupHandler = new GroupHandler(gamestate);
             LibritiesHandler libritiesHandler = new LibritiesHandler(gamestate);
@@ -45,6 +50,7 @@ namespace Go_AI
             (int, int) freeGroup = (-1, -1); // for the third case
             (int, int) surroundGroup = (-1, -1); // for the fourth case
             (int, int) pattern = (-1, -1); // for the fifth case
+            (int, int) randomCoord = (-1, -1); // for the sixth case
             int maxSize;
             int numOfLibrities;
             Dictionary<(int, int), Player> librities;
@@ -117,7 +123,7 @@ namespace Go_AI
             {
                 numOfLibrities = 4;
                 //if the color of the group is the player color and the group has two liberties
-                if (group[group.Keys.First()] == this.gamestate.Player.Opponnent() && libritiesHandler.GetNumberOfLibertiesOfGroup(group) >= 2 && group.Count >= maxSize)
+                if (group[group.Keys.First()] == this.gamestate.Player.Opponnent() && libritiesHandler.GetNumberOfLibertiesOfGroup(group) == 2 && group.Count >= maxSize)
                 {
                     librities = libritiesHandler.GetLibritiesOfGroup(group);
                     foreach ((int, int) coord in librities.Keys)
@@ -154,7 +160,11 @@ namespace Go_AI
                             board[(row - 1, col - 1)] == copy.Player && board[(row - 1, col + 1)] == copy.Player)
                         {
                             temp = copy.Copy();
-                            //check if can put the stone there
+                            (int, int) checkCoord = (row - 1, col);// one above oponnent
+                            if (temp.AddStone(checkCoord))
+                            {
+                                pattern = checkCoord;
+                            }
                         }
                     }
 
@@ -165,7 +175,11 @@ namespace Go_AI
                             board[(row - 1, col - 1)] == copy.Player && board[(row, col + 1)] == copy.Player)
                         {
                             temp = copy.Copy();
-                            //check if can put the stone there
+                            (int, int) checkCoord = (row - 1, col);// one above oponnent
+                            if (temp.AddStone(checkCoord))
+                            {
+                                pattern = checkCoord;
+                            }
                         }
                     }
 
@@ -176,7 +190,11 @@ namespace Go_AI
                             board[(row, col - 1)] == copy.Player && board[(row, col + 1)] == copy.Player)
                         {
                             temp = copy.Copy();
-                            //check if can put the stone there
+                            (int, int) checkCoord = (row + 1, col);// one below oponnent
+                            if (temp.AddStone(checkCoord))
+                            {
+                                pattern = checkCoord;
+                            }
                         }
                     }
 
@@ -187,7 +205,11 @@ namespace Go_AI
                             board[(row - 1, col - 1)] == copy.Player && board[(row - 1, col + 2)] == copy.Player)
                         {
                             temp = copy.Copy();
-                            //check if can put the stone there
+                            (int, int) checkCoord = (row - 1, col);// one above oponnent
+                            if (temp.AddStone(checkCoord))
+                            {
+                                pattern = checkCoord;
+                            }
                         }
                     }
 
@@ -198,7 +220,11 @@ namespace Go_AI
                             board[(row - 2, col - 1)] == copy.Player && board[(row - 1, col + 2)] == copy.Player)
                         {
                             temp = copy.Copy();
-                            //check if can put the stone there
+                            (int, int) checkCoord = (row - 1, col);// one above oponnent
+                            if (temp.AddStone(checkCoord))
+                            {
+                                pattern = checkCoord;
+                            }
                         }
                     }
 
@@ -209,7 +235,11 @@ namespace Go_AI
                             board[(row, col - 1)] == copy.Player && board[(row + 1, col - 2)] == copy.Player)
                         {
                             temp = copy.Copy();
-                            //check if can put the stone there
+                            (int, int) checkCoord = (row + 1, col);// one below oponnent
+                            if (temp.AddStone(checkCoord))
+                            {
+                                pattern = checkCoord;
+                            }
                         }
                     }
 
@@ -220,12 +250,27 @@ namespace Go_AI
                             board[(row - 1, col)] == copy.Player && board[(row - 1, col - 2)] == copy.Player)
                         {
                             temp = copy.Copy();
-                            //check if can put the stone there
+                            (int, int) checkCoord = (row, col - 1);// one to the left oponnent
+                            if (temp.AddStone(checkCoord))
+                            {
+                                pattern = checkCoord;
+                            }
                         }
                     }
                 }
             }
 
+            // 6. If none of the above apply, choose a random move
+            Random random = new Random();
+            int Rrow = random.Next(size);
+            int Rcol = random.Next(size);
+            while (!copy.AddStone((Rrow, Rcol)))
+            {
+                Rrow = random.Next(size);
+                Rcol = random.Next(size);
+            }
+            randomCoord = (Rrow, Rcol);
+            
             //priorities
             if (defendGroup != (-1, -1))
             {
@@ -246,6 +291,10 @@ namespace Go_AI
             else if (pattern != (-1, -1))
             {
                 bestMove = pattern;
+            }
+            else if (randomCoord != (-1, -1))
+            {
+                bestMove = randomCoord;
             }
 
             return bestMove;

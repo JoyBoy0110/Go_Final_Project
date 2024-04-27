@@ -5,6 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Go_UI"
         mc:Ignorable="d"
+        Icon="C:\Users\naorb\source\repos\goFinalProject\Go_UI\Assets\9Board.png"
          Title=""  Width="1000"  Height="1000"
         WindowStartupLocation="CenterScreen">
     <Grid x:Name="Grid">
@@ -24,14 +25,14 @@
         <Viewbox Grid.Column="1" Grid.Row="0">
             <TextBlock Foreground="Goldenrod" Text="go" FontFamily="Algerian"></TextBlock>
         </Viewbox>
-        <Button Background="Beige" Opacity="0.75"  Foreground="Goldenrod" Grid.Column="1" Grid.Row="1" Height="175" Width="300" Click="Play_Click" Name="play" Content="Play" FontSize="70" HorizontalAlignment="Center"  >
+        <Button FontFamily="Algerian" Background="Beige" Opacity="0.75"  Foreground="Goldenrod" Grid.Column="1" Grid.Row="1" Height="175" Width="300" Click="Play_Click" Name="play" Content="Play" FontSize="70" HorizontalAlignment="Center"  >
             <Button.Resources>
                 <Style TargetType="{x:Type Border}">
                     <Setter Property="CornerRadius" Value="20"/>
                 </Style>
             </Button.Resources>
         </Button>
-        <Button Background="Beige" Opacity="0.75" Foreground="Goldenrod" Grid.Column="1" Grid.Row="2" Height="100" Width="200" Click="exit_Click"  Name="exit" Content="Exit" FontSize="40" HorizontalAlignment="Center">
+        <Button FontFamily="Algerian" Background="Beige" Opacity="0.75" Foreground="Goldenrod" Grid.Column="1" Grid.Row="2" Height="100" Width="200" Click="exit_Click"  Name="exit" Content="Exit" FontSize="40" HorizontalAlignment="Center">
             <Button.Resources>
                 <Style TargetType="{x:Type Border}">
                     <Setter Property="CornerRadius" Value="10"/>

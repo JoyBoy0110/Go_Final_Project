@@ -28,33 +28,29 @@ namespace Go_UI
 
         private void PlusHalf_Click(object sender, RoutedEventArgs e)
         {
-            komi += 0.5;
+            if (komi + 0.5 <= 15)
+                komi += 0.5;
             UpdateKomi();
         }
 
         private void PlusOne_Click(object sender, RoutedEventArgs e)
         {
-            komi += 1;
+            if (komi + 1 <= 15)
+                komi += 1.0;
             UpdateKomi();
         }
 
         private void MinusHalf_Click(object sender, RoutedEventArgs e)
         {
-            komi -= 0.5;
-            if(komi < 0)
-            {
-                komi = 0.0;
-            }
+            if (komi - 0.5 >= 0)
+                komi -= 0.5;
             UpdateKomi();
         }
 
         private void MinusOne_Click(object sender, RoutedEventArgs e)
         {
-            komi -= 1;
-            if (komi < 0)
-            {
-                komi = 0.0;
-            }
+            if (komi - 1 >= 0)
+                komi -= 1.0;
             UpdateKomi();
         }
 

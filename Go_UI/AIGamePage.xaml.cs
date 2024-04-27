@@ -128,7 +128,11 @@ namespace Go_UI
         {
             bool flag = false;
             (int, int) placeCordinates = ToGridCordinates(position);
-            if (gameState.Board.IsOccupied(placeCordinates) || gameState.GetLastMove() == (placeCordinates, gameState.Player))
+            if (gameState.Board.IsOccupied(placeCordinates))
+            {
+                return;
+            }
+            if (gameState.GetLastMove() == (placeCordinates, gameState.Player) || gameState.IsKo(placeCordinates, gameState.Player))
             {
                 return;
             }

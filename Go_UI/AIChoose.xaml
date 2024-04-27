@@ -39,7 +39,7 @@
             <Image Source = "C:\Users\naorb\source\repos\goFinalProject\Go_UI\Assets\PlayerVSAi.png">
             </Image>
         </Button>
-        <Button Background="Beige" Opacity="0.75" Foreground="Goldenrod" Grid.Column="0" Grid.ColumnSpan="3" Grid.Row="2" Height="100" Width="200" Click="BackButton_Click"  Name="BackButton" Content="Back" FontSize="30" HorizontalAlignment="Center">
+        <Button FontFamily="Algerian" Background="Beige" Opacity="0.75" Foreground="Goldenrod" Grid.Column="0" Grid.ColumnSpan="3" Grid.Row="2" Height="100" Width="200" Click="BackButton_Click"  Name="BackButton" Content="Back" FontSize="30" HorizontalAlignment="Center">
             <Button.Resources>
                 <Style TargetType="{x:Type Border}">
                     <Setter Property="CornerRadius" Value="10"/>

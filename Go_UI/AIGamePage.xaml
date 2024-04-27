@@ -4,7 +4,8 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Go_UI"
-                mc:Ignorable="d"
+        mc:Ignorable="d"
+        Icon="C:\Users\naorb\source\repos\goFinalProject\Go_UI\Assets\9Board.png"
         Title="GamePage" Width="1000" SizeToContent="Height" Height="1000" 
         Background="Black"
         WindowStartupLocation="CenterScreen">
@@ -25,8 +26,8 @@
                     <ColumnDefinition Width="2*"></ColumnDefinition>
                     <ColumnDefinition Width="1*"></ColumnDefinition>
                 </Grid.ColumnDefinitions>
-                <TextBlock Grid.Column="1" x:Name="text_block" FontSize="70" HorizontalAlignment="Center">Go</TextBlock>
-                <Button Click="Resign_Click"  x:Name="Resign" Grid.Column="2" HorizontalAlignment="Left" VerticalAlignment="Bottom" Width="100" Height="40" FontSize="25" Content="resign" Margin="26,0,0,0"></Button>
+                <TextBlock FontFamily="Algerian" Foreground="Goldenrod" Grid.Column="1" x:Name="text_block" FontSize="70" HorizontalAlignment="Center">Go</TextBlock>
+                <Button FontFamily="Algerian" Click="Resign_Click"  x:Name="Resign" Grid.Column="2" HorizontalAlignment="Left" VerticalAlignment="Bottom" Width="100" Height="40" FontSize="25" Content="resign" Margin="26,0,0,0"></Button>
             </Grid>
 
             <Grid x:Name="middle" Grid.Row="1">
@@ -55,10 +56,10 @@
                     <ColumnDefinition Width="450"></ColumnDefinition>
                 </Grid.ColumnDefinitions>
                 <Image Grid.Column="0" Source="C:\Users\naorb\source\repos\goFinalProject\Go_UI\Assets/white_stone.png"></Image>
-                <TextBlock Text="Player1" FontSize="50"></TextBlock>
-                <Button x:Name="passButton" Click="Pass_Click" Grid.Column="1" Content="Pass" FontSize="50"></Button>
+                <TextBlock FontFamily="Algerian" Foreground="Goldenrod" Text="Player1" FontSize="40" VerticalAlignment="Center"></TextBlock>
+                <Button FontFamily="Algerian" x:Name="passButton" Click="Pass_Click" Grid.Column="1" Content="Pass" FontSize="35"></Button>
                 <Image Grid.Column="2" Source="C:\Users\naorb\source\repos\goFinalProject\Go_UI\Assets/black_stone.png"></Image>
-                <TextBlock HorizontalAlignment="Right" Text="Player2" FontSize="50" Grid.Column="2" ></TextBlock>
+                <TextBlock FontFamily="Algerian" Foreground="Goldenrod" HorizontalAlignment="Right" Text="Player2" VerticalAlignment="Center" FontSize="40" Grid.Column="2" ></TextBlock>
             </Grid>
         </Grid>
     </Viewbox>

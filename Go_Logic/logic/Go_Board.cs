@@ -91,7 +91,8 @@
             Go_Board copy = new Go_Board(this.size);
             foreach ((int, int) key in this.board_dict.Keys)
             {
-                copy.board_dict.Add(key, this.board_dict[key]);
+                if (key != (-1, -1))
+                    copy.board_dict.Add(key, this.board_dict[key]);
             }
 
             return copy;

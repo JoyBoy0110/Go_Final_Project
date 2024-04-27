@@ -226,16 +226,14 @@
             //get the new board
             // update main board with updated board
             SaveVersions();
+            (int, int) exception = (-1,-1);
             switch (action)
             {
                 case ActionType.Add:
                     Board.Add_Stone(coords, Player);
                     break;
-                case ActionType.Remove:
-                    break;
-                case ActionType.Pass:
-                    break;
-                case ActionType.None:
+                case ActionType.Check:
+                    exception = coords;
                     break;
                 default:
                     break;
@@ -245,7 +243,7 @@
             boardGroups = groupHandler.GetGroups();
             foreach (Dictionary<(int, int), Player> group in boardGroups)
             {
-                if (libritiesHandler.IsCaptured(group))
+                if (libritiesHandler.IsCaptured(group) && !group.ContainsKey(exception))
                 {
                     cuptureHandler = new CuptureHandler(this);
                     this.Board = cuptureHandler.Capture(group);
@@ -266,7 +264,6 @@
         /// <returns></returns>
         public bool AddStone((int, int) coords)
         {
-            SaveVersions();
             placingHandler = new PlacingHandler(this);
             PlaceType placeType = placingHandler.EvaluatePlace(coords, Player);
             if (placeType != PlaceType.Normal && placeType != PlaceType.legal_suicide)
@@ -279,22 +276,15 @@
 
         public bool IsKo((int, int) cord, Player color)
         {
-            Go_Board temp = Board.Copy();
-            Go_Board[] versionsTemp = new Go_Board[2];
-            versionsTemp[0] = versions[0].Copy();
-            versionsTemp[1] = versions[1].Copy();
+            GameState temp = this.Copy();
             bool flag = false;
-            Board.Add_Stone(cord, color);
-            Update(ActionType.Check, cord);
-            if (versions[1].Equals(new Go_Board(9)))
+            temp.Board.Add_Stone(cord, color);
+            temp.Update(ActionType.Check, cord);
+            if (temp.versions[1].Equals(new Go_Board(9)))
             {
-                versions = versionsTemp;
-                Board = temp;
                 return flag;
             }
-            flag = versions[1].Equals(Board);
-            versions = versionsTemp;
-            Board = temp;
+            flag = temp.versions[1].Equals(temp.Board);
             return flag;
         }
         
@@ -314,7 +304,7 @@
             temp.libritiesHandler = new LibritiesHandler(temp);
             temp.Board.Add_Stone(cord, Player);
             int flag = temp.libritiesHandler.GetNumberOfLibertiesOfGroup(temp.groupHandler.GetGroup(cord, Player));
-            temp.Update(ActionType.Check, (-1, -1));
+            temp.Update(ActionType.Check, cord);
             if (temp.libritiesHandler.GetNumberOfLibertiesOfGroup(temp.groupHandler.GetGroup(cord, Player)) != 0 && flag == 0)
             {
                 return true;
@@ -344,7 +334,7 @@
         /// </summary>
         private void SaveVersions()
         {
-            versions[1] = versions[0];
+            versions[1] = versions[0].Copy();
             versions[0] = Board.Copy();
         }
 
@@ -360,7 +350,8 @@
             temp.blackScore = blackScore;
             temp.whiteScore = whiteScore;
             temp.boardGroups = boardGroups;
-            temp.versions = versions;
+            temp.versions[0] = versions[0].Copy();
+            temp.versions[1] = versions[1].Copy();
             return temp;
         }
     }

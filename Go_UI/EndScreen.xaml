@@ -5,6 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Go_UI"
         mc:Ignorable="d"
+        Icon="C:\Users\naorb\source\repos\goFinalProject\Go_UI\Assets\9Board.png"
         Title=""  Width="200"  Height="200" SizeToContent="WidthAndHeight"
         Background="Black"
         WindowStartupLocation="CenterScreen">
@@ -24,24 +25,24 @@
             <Grid.Background>
                 <SolidColorBrush Color="PaleGoldenrod"></SolidColorBrush>
             </Grid.Background>
-            <TextBlock x:Name="EndMessage" VerticalAlignment="Center" Grid.ColumnSpan="3" Grid.Row="0" Grid.Column="0" FontSize="9" Text="black resigned" HorizontalAlignment="Center">
+            <TextBlock FontFamily="Algerian" x:Name="EndMessage" VerticalAlignment="Center" Grid.ColumnSpan="3" Grid.Row="0" Grid.Column="0" FontSize="9" Text="black resigned" HorizontalAlignment="Center">
             </TextBlock>
-            <TextBlock x:Name="WinnerMessage" VerticalAlignment="Bottom" Grid.ColumnSpan="3" Grid.Row="0" Grid.Column="0" FontSize="15" Text="the winner is white" HorizontalAlignment="Center">
+            <TextBlock FontFamily="Algerian" x:Name="WinnerMessage" VerticalAlignment="Bottom" Grid.ColumnSpan="3" Grid.Row="0" Grid.Column="0" FontSize="15" Text="the winner is white" HorizontalAlignment="Center">
             </TextBlock>
-            <TextBlock Background="Black" Foreground="White" VerticalAlignment="Center" Grid.Row="1" Grid.Column="0" HorizontalAlignment="Right" Text="Black" FontSize="10">
+            <TextBlock FontFamily="Algerian" Background="Black" Foreground="White" VerticalAlignment="Center" Grid.Row="1" Grid.Column="0" HorizontalAlignment="Right" Text="Black" FontSize="10">
             </TextBlock>
-            <TextBlock x:Name="EndScore" VerticalAlignment="Center" Grid.Row="1" Grid.Column="1" FontSize="15" Text=" 0 - 0 " HorizontalAlignment="Center">
+            <TextBlock FontFamily="Algerian" x:Name="EndScore" VerticalAlignment="Center" Grid.Row="1" Grid.Column="1" FontSize="15" Text=" 0 - 0 " HorizontalAlignment="Center">
             </TextBlock>
-            <TextBlock Background="White" VerticalAlignment="Center" Grid.Row="1" Grid.Column="2" HorizontalAlignment="Left" Text="White" FontSize="10" >
+            <TextBlock FontFamily="Algerian" Background="White" VerticalAlignment="Center" Grid.Row="1" Grid.Column="2" HorizontalAlignment="Left" Text="White" FontSize="10" >
             </TextBlock>
-            <Button Background="Beige" Opacity="0.75"  Foreground="Goldenrod" Grid.Column="1" Grid.Row="2" Height="25" Width="50" Click="PlayAgain_Click"  Name="PlayAgain" Content="Play Again" FontSize="10" HorizontalAlignment="Center">
+            <Button FontFamily="Algerian" Background="Beige" Opacity="0.75"  Foreground="Goldenrod" Grid.Column="1" Grid.Row="2" Height="25" Width="50" Click="PlayAgain_Click"  Name="PlayAgain" Content="Play Again" FontSize="7" HorizontalAlignment="Center">
                 <Button.Resources>
                     <Style TargetType="{x:Type Border}">
                         <Setter Property="CornerRadius" Value="5"/>
                     </Style>
                 </Button.Resources>
             </Button>
-            <Button Background="Beige" Opacity="0.75" Foreground="Goldenrod" Grid.Column="1" Grid.Row="3" Height="25" Width="50" Click="Exit_Click"  Name="Exit" Content="Exit" FontSize="10" HorizontalAlignment="Center">
+            <Button FontFamily="Algerian" Background="Beige" Opacity="0.75" Foreground="Goldenrod" Grid.Column="1" Grid.Row="3" Height="25" Width="50" Click="Exit_Click"  Name="Exit" Content="Exit" FontSize="10" HorizontalAlignment="Center">
                 <Button.Resources>
                     <Style TargetType="{x:Type Border}">
                         <Setter Property="CornerRadius" Value="5"/>
