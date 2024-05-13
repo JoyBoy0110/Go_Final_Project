@@ -1,12 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace Go_Logic
+﻿namespace Go_Logic
 {
-    public enum PlaceType
+    public enum PlaceType // the type of placing of a stone on the board
     {
         Normal,
         Ko,

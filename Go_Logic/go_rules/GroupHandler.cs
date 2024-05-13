@@ -5,7 +5,10 @@
         public GroupHandler(GameState state) : base(state)
         {
         }
-
+        /// <summary>
+        /// returns all the groups that are on the board
+        /// </summary>
+        /// <returns></returns>
         public List<Dictionary<(int, int), Player>> GetGroups()
         {
             bool flag;
@@ -29,11 +32,28 @@
             return groups;
         }
 
+        public Dictionary<(int, int), Player> GetGroup((int, int) coord, Go_Board board)
+        {
+            return GetGroup(coord, board.board_dict[coord]);
+        }
+        /// <summary>
+        /// sends an empty group and returns the group that the coordinate is in
+        /// </summary>
+        /// <param name="coord"></param>
+        /// <param name="color"></param>
+        /// <returns></returns>
         public Dictionary<(int, int), Player> GetGroup((int, int) coord, Player color)
         {
             return GetGroup(coord, color, new Dictionary<(int, int), Player>());
         }
 
+        /// <summary>
+        /// a recursive function that returns the group that the coordinate is in
+        /// </summary>
+        /// <param name="coord"></param>
+        /// <param name="color"></param>
+        /// <param name="group"></param>
+        /// <returns></returns>
         private Dictionary<(int, int), Player> GetGroup((int, int) coord, Player color, Dictionary<(int, int), Player> group)
         {
             if (this.state.Board.IsInside(coord) && this.state.Board.IsOccupied(coord) && this.state.Board.board_dict[coord] == color && !group.ContainsKey(coord))
@@ -49,3 +69,4 @@
 
     }
 }
+    

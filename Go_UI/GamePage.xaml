@@ -41,7 +41,7 @@
                 <Grid MouseDown="Board_MouseDown" MouseLeave="Board_MouseLeave" MouseMove="Image_MouseMove" Grid.Column="1" x:Name="Board" Width="800" Height="800"
 >
                     <Grid.Background>
-                        <ImageBrush ImageSource="C:\Users\naorb\source\repos\goFinalProject\Go_UI\Assets\9Board.png"></ImageBrush>
+                        <ImageBrush x:Name="Board_Image" ImageSource="C:\Users\naorb\source\repos\goFinalProject\Go_UI\Assets\9Board.png"></ImageBrush>
                     </Grid.Background>
                     <UniformGrid x:Name="PlacingGrid" Rows="9" Columns="9" Margin="10,12,10,12">
                     </UniformGrid>
@@ -56,11 +56,11 @@
                     <ColumnDefinition Width="100"></ColumnDefinition>
                     <ColumnDefinition Width="450"></ColumnDefinition>
                 </Grid.ColumnDefinitions>
-                <Image Grid.Column="0" Source="C:\Users\naorb\source\repos\goFinalProject\Go_UI\Assets/white_stone.png"></Image>
-                <TextBlock Foreground="Goldenrod" Text="Player1" FontSize="40" VerticalAlignment="Center" FontFamily="Algerian"></TextBlock>
-                <Button FontFamily="Algerian" x:Name="passButton" Click="Pass_Click" Grid.Column="1" Content="Pass" FontSize="35"></Button>
-                <Image Grid.Column="2" Source="C:\Users\naorb\source\repos\goFinalProject\Go_UI\Assets/black_stone.png"></Image>
-                <TextBlock FontFamily="Algerian" Foreground="Goldenrod" VerticalAlignment="Center" HorizontalAlignment="Right" Text="Player2" FontSize="40" Grid.Column="2" ></TextBlock>
+                <Image HorizontalAlignment="Right" Margin="0, 0, 35, 0" Grid.Column="0" Source="C:\Users\naorb\source\repos\goFinalProject\Go_UI\Assets/white_stone.png"></Image>
+                <TextBlock x:Name="WPlayerTxt" HorizontalAlignment="Left" Background="White" Foreground="Goldenrod" Margin="15, 0, 0, 0" Text="White Player" FontSize="40" VerticalAlignment="Center" FontFamily="Algerian"/>
+                <Button FontFamily="Algerian" x:Name="passButton" Click="Pass_Click" Grid.Column="1" Content="Pass" FontSize="35"/>
+                <Image HorizontalAlignment="Left" Margin="35, 0, 0, 0" Grid.Column="2" Source="C:\Users\naorb\source\repos\goFinalProject\Go_UI\Assets/black_stone.png"/>
+                <TextBlock x:Name="BPlayerTxt" Background="Black" FontFamily="Algerian" Margin="0, 0, 15, 0" Foreground="Goldenrod" VerticalAlignment="Center" HorizontalAlignment="Right" Text="Black Player" FontSize="40" Grid.Column="2"/>
             </Grid>
         </Grid>
     </Viewbox>

@@ -9,6 +9,7 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="Assets\13Board.png" />
     <None Remove="Assets\9Board.png" />
     <None Remove="Assets\black_stone.png" />
     <None Remove="Assets\Board.png" />
@@ -19,18 +20,14 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Content Include="Assets\GO.ico" />
-  </ItemGroup>
-
-  <ItemGroup>
     <ProjectReference Include="..\Go_AI\Go_AI.csproj" />
     <ProjectReference Include="..\Go_Logic\Go_Logic.csproj" />
   </ItemGroup>
 
   <ItemGroup>
+    <Resource Include="Assets\13Board.png" />
     <Resource Include="Assets\9Board.png" />
     <Resource Include="Assets\black_stone.png" />
-    <Resource Include="Assets\Board.png" />
     <Resource Include="Assets\CursorB.cur" />
     <Resource Include="Assets\CursorW.cur" />
     <Resource Include="Assets\PlayerVSPlayer.png" />

@@ -1,0 +1,98 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1" MembersFormat="NameAndType">
+  <Class Name="Go_UI.SelectKomi">
+    <Position X="2" Y="1.75" Width="2" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAEAAEAIAAAAAAAIAAAAAABAAAKAQAAA=</HashCode>
+      <FileName>SelectKomi.xaml.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="Go_UI.SelectColor">
+    <Position X="6" Y="1.75" Width="2.25" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAABAAAAAAAAAAAAAIAAAAAAAQAACAAAAA=</HashCode>
+      <FileName>SelectColor.xaml.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="Go_UI.MainWindow">
+    <Position X="0.5" Y="1.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAEAABAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>MainWindow.xaml.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="Go_UI.Images">
+    <Position X="2" Y="4.75" Width="3.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAEAAAAQAAAAAAAAAQAAAAAAAAA=</HashCode>
+      <FileName>Images.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Go_UI.GoCursors">
+    <Position X="2" Y="6.5" Width="1.75" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAARAIAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>GoCursors.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Go_UI.GamePage">
+    <Position X="16" Y="1.75" Width="2.25" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAhAgAAEAAGIKBIAAAAAACAAAAgAEAwIAA=</HashCode>
+      <FileName>GamePage.xaml.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Property Name="GameState" />
+    </ShowAsAssociation>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="Go_UI.EndScreen">
+    <Position X="8.25" Y="1.75" Width="2" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAABAAAAAAAAAAAAQAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>EndScreen.xaml.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="Go_UI.AIGamePage">
+    <Position X="10.25" Y="1.75" Width="2.25" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAEAAAShAgAAEQAGKKBIAAAAAACAAAAgEUAwIAA=</HashCode>
+      <FileName>AIGamePage.xaml.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Property Name="IAI" />
+      <Property Name="GameState" />
+      <Property Name="Player" />
+    </ShowAsAssociation>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="Go_UI.AIChoose">
+    <Position X="4" Y="1.75" Width="2" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAIACAAAAAAAACQAAAA=</HashCode>
+      <FileName>AIChoose.xaml.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="Go_Logic.GameState" Collapsed="true">
+    <Position X="13.5" Y="2.5" Width="1.5" />
+    <TypeIdentifier />
+  </Class>
+  <Class Name="System.Windows.Window" Collapsed="true">
+    <Position X="9" Y="0.5" Width="1.5" />
+    <TypeIdentifier />
+  </Class>
+  <Class Name="Go_Logic.Player" Collapsed="true">
+    <Position X="13.5" Y="3.25" Width="1.5" />
+    <TypeIdentifier />
+  </Class>
+  <Interface Name="Go_AI.IAI" Collapsed="true">
+    <Position X="13.5" Y="1.75" Width="1.5" />
+    <TypeIdentifier />
+  </Interface>
+  <Font Name="Segoe UI" Size="9" />
+</ClassDiagram>

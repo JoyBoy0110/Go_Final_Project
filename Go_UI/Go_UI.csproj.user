@@ -25,6 +25,9 @@
     <Compile Update="SelectKomi.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Update="SelectSize.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
     <Page Update="AIChoose.xaml">
@@ -46,6 +49,9 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Update="SelectKomi.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="SelectSize.xaml">
       <SubType>Designer</SubType>
     </Page>
   </ItemGroup>

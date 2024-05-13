@@ -10,11 +10,11 @@ none
 false
 TRACE;DEBUG;NET;NET8_0;NETCOREAPP
 C:\Users\naorb\source\repos\goFinalProject\Go_UI\App.xaml
-7673431315
-1-759488209
-12-1071508204
+9-965473845
+
+14-543528243
 200-1570014630
-AIChoose.xaml;AIGamePage.xaml;EndScreen.xaml;GamePage.xaml;MainWindow.xaml;SelectColor.xaml;SelectKomi.xaml;
+AIChoose.xaml;AIGamePage.xaml;EndScreen.xaml;FSMGamePage.xaml;GamePage.xaml;MainWindow.xaml;SelectColor.xaml;SelectKomi.xaml;SelectSize.xaml;
 
 False
 

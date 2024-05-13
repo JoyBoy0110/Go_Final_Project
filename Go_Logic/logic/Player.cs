@@ -1,8 +1,6 @@
-﻿using System.Runtime.CompilerServices;
-
-namespace Go_Logic
+﻿namespace Go_Logic
 {
-    public enum Player
+    public enum Player // the color of a player, none is a default/ null option
     {
         Black,
         White,
@@ -10,6 +8,11 @@ namespace Go_Logic
     }
     public static class PlayerExtensions
     {
+        /// <summary>
+        /// returns the opposit of the player that the function gets
+        /// </summary>
+        /// <param name="player"></param>
+        /// <returns></returns>
         public static Player Opponnent(this Player player)
         {
             switch (player)

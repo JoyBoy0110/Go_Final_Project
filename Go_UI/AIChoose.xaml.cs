@@ -1,16 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Shapes;
+﻿using System.Windows;
 
 namespace Go_UI
 {
@@ -19,30 +7,64 @@ namespace Go_UI
     /// </summary>
     public partial class AIChoose : Window
     {
-        private double komi;
-        public AIChoose(double komi)
+        private double komi;//stores the komi value
+        private int size;//stores the komi value
+
+        /// <summary>
+        /// a constructor that initializes the komi value
+        /// </summary>
+        /// <param name="komi"></param>
+        public AIChoose(double komi, int size)
         {
             InitializeComponent();
             this.komi = komi;
+            this.size = size;
         }
 
+        /// <summary>
+        /// a button click event that takes the user back to the SelectKomi page
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void BackButton_Click(object sender, RoutedEventArgs e)
         {
-            SelectKomi page = new SelectKomi();
+            SelectSize page = new SelectSize(komi);
             this.Close();
             page.ShowDialog();
         }
 
+        /// <summary>
+        /// a button click event that takes the user to the SelectColor page
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void AIvP_Click(object sender, RoutedEventArgs e)
         {
-            SelectColor page = new SelectColor(komi);
+            SelectColor page = new SelectColor(komi, size, 0);
             this.Close();
             page.ShowDialog();
         }
 
+        /// <summary>
+        /// a button click event that takes the user to the GamePage page
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void PvP_Click(object sender, RoutedEventArgs e)
         {
-            GamePage page = new GamePage(komi);
+            GamePage page = new GamePage(komi, size);
+            this.Close();
+            page.ShowDialog();
+        }
+
+        /// <summary>
+        /// a button click event that takes the user to the SelectColor page
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void FSMvP_Click(object sender, RoutedEventArgs e)
+        {
+            SelectColor page = new SelectColor(komi, size, 1);
             this.Close();
             page.ShowDialog();
         }

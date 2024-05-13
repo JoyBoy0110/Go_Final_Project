@@ -1,33 +1,48 @@
-﻿using System.Windows;
+﻿using System;
+using Go_Logic;
+using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
-using Go_Logic;
 
 namespace Go_UI
 {
+
     /// <summary>
     /// Interaction logic for GamePage.xaml
     /// </summary>
     public partial class GamePage : Window
     {
-        private readonly Image[,] PieceImages = new Image[9, 9];
-        private readonly Image[,] HoverImages = new Image[9, 9];
-        private GameState gameState;
-        private (int, int) hoverCordinates = (-1, -1);
-        private bool endOfGame;
+        private readonly Image[,] PieceImages;// the images of the pieces
+        private readonly Image[,] HoverImages;// the images of the hover pieces
+        private GameState gameState;// the game state
+        private (int, int) hoverCordinates = (-1, -1);// the cordinates of the hover
+        private bool endOfGame;// a flag that indicates if the game ended
 
-        public GamePage(double komi)
+        /// <summary>
+        /// a constructor that gets the komi and creates a new game state
+        /// </summary>
+        /// <param name="komi"></param>
+        public GamePage(double komi, int size)
         {
             InitializeComponent();
-            gameState = new GameState(new Go_Board(9), komi);// need to add komi, a form which inside of him buttons which' let as select how much advantage to give the oponnent
+            gameState = new GameState(new Go_Board(size), komi);
+            PieceImages = new Image[size, size];
+            HoverImages = new Image[size, size];
+            PlacingGrid.Rows = size;
+            PlacingGrid.Columns = size;
+            PiecesGrid.Rows = size;
+            PiecesGrid.Columns = size;
+            Board_Image.ImageSource = Images.GetBoardImage(size);
             InitializeBoard();
             DrawCurrentBoard(gameState.Board);
             Set_Cursor(gameState.Player);
             endOfGame = false;
         }
 
+        /// <summary>
+        /// a method that initializes the board
+        /// </summary>
         private void InitializeBoard()
         {
             for (int row = 0; row < PieceImages.GetLength(0); row++)
@@ -54,7 +69,7 @@ namespace Go_UI
         {
             foreach ((int, int) cordinates in board.board_dict.Keys)
             {
-                PieceImages[cordinates.Item1, cordinates.Item2].Source = Images.GetImage(board.board_dict[cordinates]);
+                PieceImages[cordinates.Item1, cordinates.Item2].Source = Images.GetStoneImage(board.board_dict[cordinates]);
             }
             for (int row = 0; row < PieceImages.GetLength(0); row++)
                 for (int col = 0; col < PieceImages.GetLength(1); col++)
@@ -73,13 +88,19 @@ namespace Go_UI
         /// <returns></returns>
         private (int, int) ToGridCordinates(Point mousePosition)
         {
-            int row = (int)(mousePosition.Y / (Board.Height / 9));
-            int col = (int)(mousePosition.X / (Board.Width / 9));
-            if (row < 0 || row >= 9 || col < 0 || col >= 9)
+            int size = gameState.Board.Get_size();
+            int row = (int)(mousePosition.Y / (Board.Height / size));
+            int col = (int)(mousePosition.X / (Board.Width / size));
+            if (row < 0 || row >= size || col < 0 || col >= size)
                 return (-1, -1);
             return new(row, col);
         }
 
+        /// <summary>
+        /// a method that handles the mouse move event, and shows the image of the piece that the player wants to put
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void Image_MouseMove(object sender, MouseEventArgs e)
         {
             Point mousePosition = e.GetPosition(PiecesGrid);
@@ -93,16 +114,25 @@ namespace Go_UI
             {
                 int row = hoverCordinates.Item1;
                 int col = hoverCordinates.Item2;
-                HoverImages[row, col].Source = Images.GetImage(gameState.Player);
+                HoverImages[row, col].Source = Images.GetStoneImage(gameState.Player);
             }
         }
 
+        /// <summary>
+        /// a method that handles the mouse down event, and adds a stone to the board if the player can
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void Board_MouseDown(object sender, MouseButtonEventArgs e)
         {
             Point mousePosition = e.GetPosition(PiecesGrid);
             Handle_A_Move(mousePosition);
         }
 
+        /// <summary>
+        /// a methid that handles the move of the player, and adds a stone to the board if possible
+        /// </summary>
+        /// <param name="position"></param>
         private void Handle_A_Move(Point position)
         {
             bool flag = false;
@@ -141,6 +171,9 @@ namespace Go_UI
             }
         }
 
+        /// <summary>
+        /// a method that hides the image of the piece
+        /// </summary>
         private void HideImage()
         {
             if (hoverCordinates != (-1, -1))
@@ -151,6 +184,11 @@ namespace Go_UI
             }
         }
 
+        /// <summary>
+        /// a method that handles the mouse leave event, and hides the image of the piece
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void Board_MouseLeave(object sender, MouseEventArgs e)
         {
             HideImage();
@@ -164,6 +202,7 @@ namespace Go_UI
             if (!playerPass)
                 gameState.Switch();
             Set_Cursor(gameState.Player);
+            Set_Background(gameState.Player);
 
         }
 
@@ -186,6 +225,31 @@ namespace Go_UI
             }
         }
 
+        /// <summary>
+        /// a method that sets the cursor image1
+        /// </summary>
+        /// <param name="player"></param>
+        private void Set_Background(Player player)
+        {
+            switch (player)
+            {
+                case Player.Black:
+                    WPlayerTxt.Background = new SolidColorBrush(Color.FromArgb(0, 0, 0, 0));
+                    BPlayerTxt.Background = new SolidColorBrush(Color.FromRgb(0,0,0));
+                    break;
+                case Player.White:
+                    BPlayerTxt.Background = new SolidColorBrush(Color.FromArgb(0, 0, 0, 0));
+                    WPlayerTxt.Background = new SolidColorBrush(Color.FromRgb(255, 255, 255));
+                    break;
+                default:
+                    break;
+            }
+        }
+
+        /// <summary>
+        /// a method that ends the game and opens the end screen
+        /// </summary>
+        /// <param name="end"></param>
         private void EndGame(EndType end)
         {
             EndScreen gp = new EndScreen(end, this.gameState.GetWinner(end), this.gameState.GetScores());

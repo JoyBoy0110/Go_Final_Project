@@ -1,6 +1,6 @@
 ﻿namespace Go_Logic
 {
-    public enum ActionType
+    public enum ActionType // the type of the action that is being done
     {
         Add, Remove, Pass, Check, None
     }
@@ -10,7 +10,7 @@
         public Player Player { get; private set; }// the color of the current player
         private int boardSize;// the size of the board
         private double komi;// the advantage that the white player gets at the end of the game
-        Go_Board NullBoard = new Go_Board(9);// a null board
+        Go_Board NullBoard;// a null board
 
         public int blackStoneCounter { get; private set; }// a field that keeps track of how many stones left for black
         public int whiteStoneCounter { get; private set; }// a field that keeps track of how many stones left for white
@@ -18,23 +18,24 @@
         public double blackScore { get; private set; }// a field that keeps track of the score that the black player has achived at the end of the game 
         public double whiteScore { get; private set; }// a field that keeps track of the score that the white player has achived at the end of the game
 
-        public List<Dictionary<(int, int), Player>> boardGroups { get; private set; }
-        private LibritiesHandler libritiesHandler;
-        private GroupHandler groupHandler;
-        private CuptureHandler cuptureHandler;
-        private PlacingHandler placingHandler;
-        private EndGameHandler endGameHandler;
+        public List<Dictionary<(int, int), Player>> boardGroups { get; private set; } // a list of all the groups on the board
+        private LibritiesHandler libritiesHandler;// a handler for the librities of the groups
+        private GroupHandler groupHandler;// a handler for the groups on the board
+        private CuptureHandler cuptureHandler;// a handler for the cupture of the groups
+        private PlacingHandler placingHandler;// a handler for the placing of the stones
+        private EndGameHandler endGameHandler;// a handler for the end of the game
 
         public Go_Board[] versions;// the last two versions of the board
         private ((int, int), Player) lastMove;// the last move that was made
 
         /// <summary>
-        /// constructor for the game state, initialize all the components
+        /// constructor for the game state, initialize all the components, gets the board and the komi
         /// </summary>
         /// <param name="player"></param>
         /// <param name="board"></param>
         public GameState(Go_Board board, double komi)
         {
+            NullBoard = new Go_Board(board.Get_size());
             NullBoard.Add_Stone((-1, -1), Player.None);
             Player = Player.Black;
             Board = board;
@@ -50,8 +51,16 @@
             versions[1] = NullBoard.Copy();
             lastMove = ((-1, -1), Player.None);
         }
+
+        /// <summary>
+        /// constructor for the game state, initialize all the components, gets the board and the starting player
+        /// </summary>
+        /// <param name="board"></param>
+        /// <param name="starting_player"></param>
+        /// <param name="komi"></param>
         public GameState(Go_Board board, Player starting_player, double komi)
         {
+            NullBoard = new Go_Board(board.Get_size());
             NullBoard.Add_Stone((-1, -1), Player.None);
             Player = starting_player;
             Board = board;
@@ -68,6 +77,10 @@
             lastMove = ((-1, -1), Player.None);
         }
 
+        /// <summary>
+        /// a method that returns the number of stones that the player has left and decreases the counter of the stones
+        /// </summary>
+        /// <returns></returns>
         public int DecreaseStone()
         {
             switch (Player)
@@ -81,26 +94,6 @@
                 default:
                     return 0;
             }
-        }
-        public bool removeStone((int, int) coordinates)
-        {
-            if (Board.IsOccupied(coordinates))
-            {
-                switch (Board.board_dict[coordinates])
-                {
-                    case Player.Black:
-                        blackStoneCounter++;
-                        break;
-                    case Player.White:
-                        whiteStoneCounter++;
-                        break;
-                    default:
-                        break;
-                }
-                Board.board_dict.Remove(coordinates);
-                return true;
-            }
-            return false;
         }
 
         /// <summary>
@@ -213,6 +206,11 @@
             }
         }
 
+        /// <summary>
+        /// an update method that saves the versions of the board, does an action and updates the game state after an action is done
+        /// </summary>
+        /// <param name="action"></param>
+        /// <param name="coords"></param>
         public void Update(ActionType action, (int, int) coords)
         {
             //psudo code
@@ -274,6 +272,12 @@
             return true;
         }
 
+        /// <summary>
+        /// a function that checks if a position is ko
+        /// </summary>
+        /// <param name="cord"></param>
+        /// <param name="color"></param>
+        /// <returns></returns>
         public bool IsKo((int, int) cord, Player color)
         {
             GameState temp = this.Copy();
@@ -288,11 +292,21 @@
             return flag;
         }
         
+        /// <summary>
+        /// a method that returns the last move played
+        /// </summary>
+        /// <returns></returns>
         public ((int,int),Player) GetLastMove()
         {
             return lastMove;
         }
 
+        /// <summary>
+        /// a function that checks if a move is a legal suicide
+        /// </summary>
+        /// <param name="cord"></param>
+        /// <param name="color"></param>
+        /// <returns></returns>
         public bool IsLegalSuicide((int, int) cord, Player color)
         {
             if (Board.IsOccupied(cord))
@@ -312,6 +326,12 @@
             return false;
         }
 
+        /// <summary>
+        /// a function that checks if a move is a suicide
+        /// </summary>
+        /// <param name="cord"></param>
+        /// <param name="color"></param>
+        /// <returns></returns>
         public bool IsSuicide((int, int) cord, Player color)
         {
             if (Board.IsOccupied(cord))
@@ -353,6 +373,17 @@
             temp.versions[0] = versions[0].Copy();
             temp.versions[1] = versions[1].Copy();
             return temp;
+        }
+        
+        /// <summary>
+        /// cleans the resources
+        /// </summary>
+        public void Clean()
+        {
+            Board.Clean();
+            boardGroups.Clear();
+            versions[0].Clean();
+            versions[1].Clean();
         }
     }
 }

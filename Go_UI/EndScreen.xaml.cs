@@ -8,6 +8,12 @@ namespace Go_UI
     /// </summary>
     public partial class EndScreen : Window
     {
+        /// <summary>
+        /// a constructor for the end screen which takes in the end type, the winner and the scores and displays the appropriate message
+        /// </summary>
+        /// <param name="end"></param>
+        /// <param name="winner"></param>
+        /// <param name="scores"></param>
         public EndScreen(EndType end, Player winner, (double, double) scores)
         {
             InitializeComponent();
@@ -41,6 +47,11 @@ namespace Go_UI
             EndScore.Text = " " + scores.Item1 + " - " + scores.Item2 + " ";
         }
 
+        /// <summary>
+        /// a button click event that takes the user back to the select komi page
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void PlayAgain_Click(object sender, RoutedEventArgs e)
         {
             SelectKomi page = new SelectKomi();
@@ -48,8 +59,14 @@ namespace Go_UI
             page.ShowDialog();
         }
 
+        /// <summary>
+        /// a button click event that closes the application
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void Exit_Click(object sender, RoutedEventArgs e)
         {
+            this.Close();
             Application.Current.Shutdown();
         }
     }

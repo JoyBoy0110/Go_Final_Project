@@ -1,0 +1,89 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1" MembersFormat="NameAndType">
+  <Class Name="Go_Logic.GameState">
+    <Position X="6.75" Y="0.5" Width="2.75" />
+    <TypeIdentifier>
+      <HashCode>AAYJAAAEAAQAAIAwgAAABoCAAwKAIAKiAwCAsSASAAA=</HashCode>
+      <FileName>GameState.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Go_Logic.Go_Board">
+    <Position X="4" Y="0.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAQAAAQAAgMAAAkEAAgAAAAAAAAAAIAAAIAA=</HashCode>
+      <FileName>logic\Go_Board.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Go_Logic.PlayerExtensions" Collapsed="true">
+    <Position X="1.25" Y="1.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAIAAAAAAAA=</HashCode>
+      <FileName>logic\Player.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Go_Logic.CuptureHandler" Collapsed="true">
+    <Position X="14" Y="2.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABAAAAAAAAA=</HashCode>
+      <FileName>go_rules\CuptureHandler.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Go_Logic.EndGameHandler" Collapsed="true">
+    <Position X="17" Y="2.5" Width="1.5" />
+    <InheritanceLine Type="Go_Logic.RulesHandler" FixedToPoint="true">
+      <Path>
+        <Point X="13.5" Y="1.062" />
+        <Point X="13.5" Y="2.125" />
+        <Point X="17.75" Y="2.125" />
+        <Point X="17.75" Y="2.5" />
+      </Path>
+    </InheritanceLine>
+    <TypeIdentifier>
+      <HashCode>EAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAQAAA=</HashCode>
+      <FileName>go_rules\EndGameHandler.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Go_Logic.GroupHandler" Collapsed="true">
+    <Position X="12.5" Y="2.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAEAAAAAAAAAAA=</HashCode>
+      <FileName>go_rules\GroupHandler.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Go_Logic.LibritiesHandler" Collapsed="true">
+    <Position X="11" Y="2.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAACAAAAQAAAAAAAAgAAAAAAAAAAAAQgAA=</HashCode>
+      <FileName>go_rules\LibritiesHandler.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Go_Logic.PlacingHandler" Collapsed="true">
+    <Position X="15.5" Y="2.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACAAAAAA=</HashCode>
+      <FileName>go_rules\PlacingHandler.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Go_Logic.RulesHandler" Collapsed="true">
+    <Position X="12.75" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAQAAAAAAAAAAAAAAAAAAAAAAAAEAAAEAAAAAAAAAAA=</HashCode>
+      <FileName>go_rules\RulesHandler.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Enum Name="Go_Logic.Player">
+    <Position X="1.25" Y="2.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAEAAAAAAAAAAAAAAAAAAAABAAAAAAAAAAAAAEAAAA=</HashCode>
+      <FileName>logic\Player.cs</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Enum Name="Go_Logic.EndType" Collapsed="true">
+    <Position X="17.25" Y="3.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AEAAAAAAAAQAAAAAAAAAAAAAAAACAAAAAAAAAAEAAAA=</HashCode>
+      <FileName>go_rules\EndGameHandler.cs</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Font Name="Segoe UI" Size="9" />
+</ClassDiagram>

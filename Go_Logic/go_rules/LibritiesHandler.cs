@@ -1,4 +1,4 @@
-﻿namespace Go_Logic
+﻿    namespace Go_Logic
 {
     public class LibritiesHandler : RulesHandler
     {
@@ -6,7 +6,6 @@
         public LibritiesHandler(GameState state) : base(state)
         {
         }
-
         /// <summary>
         /// check if a group is captured, if it is return true, else return false
         /// </summary>
