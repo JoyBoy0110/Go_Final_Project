@@ -6,9 +6,30 @@
         xmlns:local="clr-namespace:Go_UI"
         mc:Ignorable="d"
         Icon="C:\Users\naorb\source\repos\goFinalProject\Go_UI\Assets\9Board.png"
-        Title="GamePage" Width="1000" SizeToContent="Height" Height="1000" 
+        Title="GamePage" Width="1000" SizeToContent="Height" Height="1000"
         Background="Black"
         WindowStartupLocation="CenterScreen">
+    <Window.Resources>
+        <ControlTemplate x:Key="NoMouseOverButtonTemplate"
+                         TargetType="Button">
+            <Border Background="{TemplateBinding Background}"
+                    BorderBrush="{TemplateBinding BorderBrush}"
+                    BorderThickness="{TemplateBinding BorderThickness}">
+                <ContentPresenter HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
+                                  VerticalAlignment="{TemplateBinding VerticalContentAlignment}" />
+            </Border>
+
+            <ControlTemplate.Triggers>
+                <Trigger Property="IsEnabled"
+                         Value="False">
+                    <Setter Property="Background"
+                            Value="{x:Static SystemColors.ControlLightBrush}" />
+                    <Setter Property="Foreground"
+                            Value="{x:Static SystemColors.GrayTextBrush}" />
+                </Trigger>
+            </ControlTemplate.Triggers>
+        </ControlTemplate>
+    </Window.Resources>
     <Viewbox>
         <Grid x:Name="Game" Width="1000">
             <Grid.RowDefinitions>
@@ -22,25 +43,39 @@
             </Grid.Background>
             <Grid x:Name="top" Grid.Row="0">
                 <Grid.ColumnDefinitions>
-                    <ColumnDefinition  Width="1*"></ColumnDefinition>
+                    <ColumnDefinition Width="1*"></ColumnDefinition>
                     <ColumnDefinition Width="2*"></ColumnDefinition>
                     <ColumnDefinition Width="1*"></ColumnDefinition>
                 </Grid.ColumnDefinitions>
-                <TextBlock FontFamily="Algerian" Foreground="Goldenrod" Grid.Column="1" x:Name="text_block" FontSize="70" HorizontalAlignment="Center">Go</TextBlock>
-                <Button FontFamily="Algerian" Click="Resign_Click"  x:Name="Resign" Grid.Column="2" HorizontalAlignment="Left" VerticalAlignment="Bottom" Width="100" Height="40" FontSize="25" Content="resign" Margin="26,0,0,0"></Button>
+                <TextBlock FontFamily="Algerian" Foreground="Goldenrod" Grid.Column="1" x:Name="text_block"
+                           FontSize="70" HorizontalAlignment="Center">
+                    Go
+                </TextBlock>
+                <Border VerticalAlignment="Bottom" Width="125" Height="40" Grid.Column="2" Margin="26,0,0,0"
+                        Background="LightGray" CornerRadius="15" Name="ResignBorder">
+                    <Button BorderBrush="Transparent" HorizontalContentAlignment="Center"
+                            MouseEnter='Resign_OnMouseEnter' MouseLeave='Resign_OnMouseLeave'
+                            Template="{StaticResource NoMouseOverButtonTemplate}" FontFamily="Algerian"
+                            Click="Resign_Click" x:Name="Resign" HorizontalAlignment="Center"
+                            FontSize="25" Content="Resign" Width="100" Height="40"
+                            Background="Transparent">
+                    </Button>
+                </Border>
             </Grid>
 
             <Grid x:Name="middle" Grid.Row="1">
                 <Grid.ColumnDefinitions>
-                    <ColumnDefinition  Width="100"></ColumnDefinition>
+                    <ColumnDefinition Width="100"></ColumnDefinition>
                     <ColumnDefinition Width="800"></ColumnDefinition>
                     <ColumnDefinition Width="100"></ColumnDefinition>
                 </Grid.ColumnDefinitions>
 
-                <Grid MouseDown="Board_MouseDown" MouseLeave="Board_MouseLeave" MouseMove="Image_MouseMove" Grid.Column="1" x:Name="Board" Width="800" Height="800"
->
+                <Grid MouseDown="Board_MouseDown" MouseLeave="Board_MouseLeave" MouseMove="Image_MouseMove"
+                      Grid.Column="1" x:Name="Board" Width="800" Height="800">
                     <Grid.Background>
-                        <ImageBrush ImageSource="C:\Users\naorb\source\repos\goFinalProject\Go_UI\Assets\9Board.png" x:Name="Board_Image"></ImageBrush>
+                        <ImageBrush ImageSource="C:\Users\naorb\source\repos\goFinalProject\Go_UI\Assets\9Board.png"
+                                    x:Name="Board_Image">
+                        </ImageBrush>
                     </Grid.Background>
                     <UniformGrid x:Name="PlacingGrid" Rows="9" Columns="9" Margin="10,12,10,12">
                     </UniformGrid>
@@ -55,11 +90,26 @@
                     <ColumnDefinition Width="100"></ColumnDefinition>
                     <ColumnDefinition Width="450"></ColumnDefinition>
                 </Grid.ColumnDefinitions>
-                <Image Grid.Column="0" Source="C:\Users\naorb\source\repos\goFinalProject\Go_UI\Assets/white_stone.png"></Image>
-                <TextBlock HorizontalAlignment="Left" FontFamily="Algerian" Foreground="Goldenrod" Text="Player1" FontSize="40" VerticalAlignment="Center"></TextBlock>
-                <Button FontFamily="Algerian" x:Name="passButton" Click="Pass_Click" Grid.Column="1" Content="Pass" FontSize="35"></Button>
-                <Image Grid.Column="2" Source="C:\Users\naorb\source\repos\goFinalProject\Go_UI\Assets/black_stone.png"></Image>
-                <TextBlock FontFamily="Algerian" Foreground="Goldenrod" HorizontalAlignment="Right" Text="Player2" VerticalAlignment="Center" FontSize="40" Grid.Column="2" ></TextBlock>
+                <Image HorizontalAlignment="Right" Margin="0, 0, 35, 0" Grid.Column="0"
+                       Source="C:\Users\naorb\source\repos\goFinalProject\Go_UI\Assets/white_stone.png">
+                </Image>
+                <TextBlock x:Name="WPlayerTxt" HorizontalAlignment="Left" Background="Transparent"
+                           Foreground="Goldenrod"
+                           Margin="15, 0, 0, 0" Text="White Player" FontSize="40" VerticalAlignment="Center"
+                           FontFamily="Algerian" />
+                <Border Name="PassBorder" Grid.Column="1" CornerRadius="15" Background="LightGray" Height="78"
+                        Width="100">
+                    <Button MouseEnter='PassButton_OnMouseEnter' MouseLeave='PassButton_OnMouseLeave'
+                            Template="{StaticResource NoMouseOverButtonTemplate}" FontFamily="Algerian"
+                            x:Name="passButton"
+                            Click="Pass_Click" Content="Pass" FontSize="35" Background="Transparent"
+                            BorderBrush="Transparent" />
+                </Border>
+                <Image HorizontalAlignment="Left" Margin="35, 0, 0, 0" Grid.Column="2"
+                       Source="C:\Users\naorb\source\repos\goFinalProject\Go_UI\Assets/black_stone.png" />
+                <TextBlock x:Name="BPlayerTxt" FontFamily="Algerian" Margin="0, 0, 15, 0"
+                           Foreground="Goldenrod" VerticalAlignment="Center" HorizontalAlignment="Right"
+                           Text="Black Player" FontSize="40" Grid.Column="2" />
             </Grid>
         </Grid>
     </Viewbox>

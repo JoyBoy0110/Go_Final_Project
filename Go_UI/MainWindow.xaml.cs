@@ -1,4 +1,5 @@
 ﻿using System.Windows;
+using System.Windows.Input;
 
 namespace Go_UI
 {
@@ -38,5 +39,24 @@ namespace Go_UI
             Application.Current.Shutdown();
         }
 
+        private void Exit_OnMouseEnter(object sender, MouseEventArgs e)
+        {
+            exit.Opacity = 0.575;
+        }
+
+        private void Exit_OnMouseLeave(object sender, MouseEventArgs e)
+        {
+            exit.Opacity = 1;
+        }
+        
+        private void Play_OnMouseEnter(object sender, MouseEventArgs e)
+        {
+            play.Opacity = 0.575;
+        }
+
+        private void Play_OnMouseLeave(object sender, MouseEventArgs e)
+        {
+            play.Opacity = 1;
+        }
     }
 }

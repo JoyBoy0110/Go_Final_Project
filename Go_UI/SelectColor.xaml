@@ -6,8 +6,29 @@
         xmlns:local="clr-namespace:Go_UI"
         mc:Ignorable="d"
         Icon="C:\Users\naorb\source\repos\goFinalProject\Go_UI\Assets\9Board.png"
-        Title=""  Width="1000"  Height="1000"
+        Title="" Width="1000" Height="1000"
         WindowStartupLocation="CenterScreen">
+    <Window.Resources>
+        <ControlTemplate x:Key="NoMouseOverButtonTemplate"
+                         TargetType="Button">
+            <Border Background="{TemplateBinding Background}"
+                    BorderBrush="{TemplateBinding BorderBrush}"
+                    BorderThickness="{TemplateBinding BorderThickness}">
+                <ContentPresenter HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
+                                  VerticalAlignment="{TemplateBinding VerticalContentAlignment}" />
+            </Border>
+
+            <ControlTemplate.Triggers>
+                <Trigger Property="IsEnabled"
+                         Value="False">
+                    <Setter Property="Background"
+                            Value="{x:Static SystemColors.ControlLightBrush}" />
+                    <Setter Property="Foreground"
+                            Value="{x:Static SystemColors.GrayTextBrush}" />
+                </Trigger>
+            </ControlTemplate.Triggers>
+        </ControlTemplate>
+    </Window.Resources>
     <Grid x:Name="Grid">
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="4*"></ColumnDefinition>
@@ -23,25 +44,40 @@
         <Grid.Background>
             <SolidColorBrush Color="PaleGoldenrod"></SolidColorBrush>
         </Grid.Background>
-        <TextBlock Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="3" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="50" Foreground="Goldenrod" Text="Choose The Color Of The AI" FontFamily="Algerian"></TextBlock>
-        <Button FontFamily="Algerian" Background="Black" Foreground="White" Opacity="0.75" Grid.ColumnSpan="2" Grid.RowSpan="2" Grid.Column="0" Grid.Row="1" Height="400" Width="400" Click="BlackChoose_Click"  Name="BlackChoose" HorizontalAlignment="Center" Content="Black"  FontSize="50">
+        <TextBlock Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="3" HorizontalAlignment="Center"
+                   VerticalAlignment="Center" FontSize="50" Foreground="Goldenrod" Text="Choose The Color Of The AI"
+                   FontFamily="Algerian">
+        </TextBlock>
+        <Button MouseEnter="BlackChoose_OnMouseEnter" MouseLeave="BlackChoose_OnMouseLeave"
+                Template="{StaticResource NoMouseOverButtonTemplate}" FontFamily="Algerian" Background="Black"
+                Foreground="White" Opacity="0.75" Grid.ColumnSpan="2" Grid.RowSpan="2" Grid.Column="0" Grid.Row="1"
+                Height="400" Width="400" Click="BlackChoose_Click" Name="BlackChoose" HorizontalAlignment="Center"
+                Content="" FontSize="50">
             <Button.Resources>
                 <Style TargetType="{x:Type Border}">
-                    <Setter Property="CornerRadius" Value="200"/>
+                    <Setter Property="CornerRadius" Value="200" />
                 </Style>
             </Button.Resources>
         </Button>
-        <Button FontFamily="Algerian" Background="White" Opacity="0.75" Grid.ColumnSpan="2" Grid.RowSpan="2" Grid.Column="1" Grid.Row="1" Height="400" Width="400" Click="WhiteChoose_Click"  Name="WhiteChoose" HorizontalAlignment="Center" Content="White"  FontSize="50">
+        <Button MouseEnter="WhiteChoose_OnMouseEnter" MouseLeave="WhiteChoose_OnMouseLeave"
+                Template="{StaticResource NoMouseOverButtonTemplate}" FontFamily="Algerian" Background="White"
+                Opacity="0.75" Grid.ColumnSpan="2" Grid.RowSpan="2" Grid.Column="1" Grid.Row="1" Height="400"
+                Width="400" Click="WhiteChoose_Click" Name="WhiteChoose" HorizontalAlignment="Center" Content=""
+                FontSize="50">
             <Button.Resources>
                 <Style TargetType="{x:Type Border}">
-                    <Setter Property="CornerRadius" Value="200"/>
+                    <Setter Property="CornerRadius" Value="200" />
                 </Style>
             </Button.Resources>
         </Button>
-        <Button FontFamily="Algerian" Background="Beige" Opacity="0.75" Foreground="Goldenrod" Grid.Column="0" Grid.ColumnSpan="3" Grid.Row="3" Height="100" Width="200" Click="BackButton_Click"  Name="BackButton" Content="Back" FontSize="30" HorizontalAlignment="Center">
+        <Button MouseEnter="BackButton_OnMouseEnter" MouseLeave="BackButton_OnMouseLeave"
+                Template="{StaticResource NoMouseOverButtonTemplate}" FontFamily="Algerian" Background="Beige"
+                Opacity="0.75" Foreground="Goldenrod" Grid.Column="0" Grid.ColumnSpan="3" Grid.Row="3" Height="100"
+                Width="200" Click="BackButton_Click" Name="BackButton" Content="Back" FontSize="30"
+                HorizontalAlignment="Center">
             <Button.Resources>
                 <Style TargetType="{x:Type Border}">
-                    <Setter Property="CornerRadius" Value="10"/>
+                    <Setter Property="CornerRadius" Value="10" />
                 </Style>
             </Button.Resources>
         </Button>

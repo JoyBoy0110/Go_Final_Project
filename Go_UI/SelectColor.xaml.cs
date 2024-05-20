@@ -1,5 +1,6 @@
 ﻿using Go_Logic;
 using System.Windows;
+using System.Windows.Input;
 
 namespace Go_UI
 {
@@ -68,6 +69,38 @@ namespace Go_UI
             AIChoose page = new AIChoose(komi, size);
             this.Close();
             page.ShowDialog();
+        }
+        private void BlackChoose_OnMouseEnter(object sender, MouseEventArgs e)
+        {
+            BlackChoose.Content = "Black";
+            BlackChoose.Opacity = 0.7;
+        }
+
+        private void BlackChoose_OnMouseLeave(object sender, MouseEventArgs e)
+        {
+            BlackChoose.Content = "";
+            BlackChoose.Opacity = 1;
+        }
+        private void WhiteChoose_OnMouseEnter(object sender, MouseEventArgs e)
+        {
+            WhiteChoose.Content = "White";
+            WhiteChoose.Opacity = 0.575;
+        }
+
+        private void WhiteChoose_OnMouseLeave(object sender, MouseEventArgs e)
+        {
+            WhiteChoose.Content = "";
+            WhiteChoose.Opacity = 1;
+        }
+        
+        private void BackButton_OnMouseEnter(object sender, MouseEventArgs e)
+        {
+            BackButton.Opacity = 0.575;
+        }
+
+        private void BackButton_OnMouseLeave(object sender, MouseEventArgs e)
+        {
+            BackButton.Opacity = 1;
         }
     }
 }

@@ -9,6 +9,27 @@
         Title=""  Width="200"  Height="200" SizeToContent="WidthAndHeight"
         Background="Black"
         WindowStartupLocation="CenterScreen">
+    <Window.Resources>
+        <ControlTemplate x:Key="NoMouseOverButtonTemplate"
+                         TargetType="Button">
+            <Border Background="{TemplateBinding Background}"
+                    BorderBrush="{TemplateBinding BorderBrush}"
+                    BorderThickness="{TemplateBinding BorderThickness}">
+                <ContentPresenter HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
+                                  VerticalAlignment="{TemplateBinding VerticalContentAlignment}" />
+            </Border>
+
+            <ControlTemplate.Triggers>
+                <Trigger Property="IsEnabled"
+                         Value="False">
+                    <Setter Property="Background"
+                            Value="{x:Static SystemColors.ControlLightBrush}" />
+                    <Setter Property="Foreground"
+                            Value="{x:Static SystemColors.GrayTextBrush}" />
+                </Trigger>
+            </ControlTemplate.Triggers>
+        </ControlTemplate>
+    </Window.Resources>
     <Viewbox>
         <Grid x:Name="grid">
             <Grid.ColumnDefinitions>
@@ -35,14 +56,14 @@
             </TextBlock>
             <TextBlock FontFamily="Algerian" Background="White" VerticalAlignment="Center" Grid.Row="1" Grid.Column="2" HorizontalAlignment="Left" Text="White" FontSize="10" >
             </TextBlock>
-            <Button FontFamily="Algerian" Background="Beige" Opacity="0.75"  Foreground="Goldenrod" Grid.Column="1" Grid.Row="2" Height="25" Width="50" Click="PlayAgain_Click"  Name="PlayAgain" Content="Play Again" FontSize="7" HorizontalAlignment="Center">
+            <Button MouseLeave="PlayAgain_OnMouseLeave" MouseEnter="PlayAgain_OnMouseEnter" Template="{StaticResource NoMouseOverButtonTemplate}" FontFamily="Algerian" Background="Beige" Opacity="0.75"  Foreground="Goldenrod" Grid.Column="1" Grid.Row="2" Height="25" Width="50" Click="PlayAgain_Click"  Name="PlayAgain" Content="Play Again" FontSize="7" HorizontalAlignment="Center">
                 <Button.Resources>
                     <Style TargetType="{x:Type Border}">
                         <Setter Property="CornerRadius" Value="5"/>
                     </Style>
                 </Button.Resources>
             </Button>
-            <Button FontFamily="Algerian" Background="Beige" Opacity="0.75" Foreground="Goldenrod" Grid.Column="1" Grid.Row="3" Height="25" Width="50" Click="Exit_Click"  Name="Exit" Content="Exit" FontSize="10" HorizontalAlignment="Center">
+            <Button MouseLeave="Exit_OnMouseLeave" MouseEnter="Exit_OnMouseEnter" Template="{StaticResource NoMouseOverButtonTemplate}" FontFamily="Algerian" Background="Beige" Opacity="0.75" Foreground="Goldenrod" Grid.Column="1" Grid.Row="3" Height="25" Width="50" Click="Exit_Click"  Name="Exit" Content="Exit" FontSize="10" HorizontalAlignment="Center">
                 <Button.Resources>
                     <Style TargetType="{x:Type Border}">
                         <Setter Property="CornerRadius" Value="5"/>

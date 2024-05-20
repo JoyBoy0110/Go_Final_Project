@@ -6,8 +6,29 @@
         xmlns:local="clr-namespace:Go_UI"
         mc:Ignorable="d"
         Icon="C:\Users\naorb\source\repos\goFinalProject\Go_UI\Assets\9Board.png"
-         Title=""  Width="1000"  Height="1000"
+        Title="" Width="1000" Height="1000"
         WindowStartupLocation="CenterScreen">
+    <Window.Resources>
+        <ControlTemplate x:Key="NoMouseOverButtonTemplate"
+                         TargetType="Button">
+            <Border Background="{TemplateBinding Background}"
+                    BorderBrush="{TemplateBinding BorderBrush}"
+                    BorderThickness="{TemplateBinding BorderThickness}">
+                <ContentPresenter HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
+                                  VerticalAlignment="{TemplateBinding VerticalContentAlignment}" />
+            </Border>
+
+            <ControlTemplate.Triggers>
+                <Trigger Property="IsEnabled"
+                         Value="False">
+                    <Setter Property="Background"
+                            Value="{x:Static SystemColors.ControlLightBrush}" />
+                    <Setter Property="Foreground"
+                            Value="{x:Static SystemColors.GrayTextBrush}" />
+                </Trigger>
+            </ControlTemplate.Triggers>
+        </ControlTemplate>
+    </Window.Resources>
     <Grid x:Name="Grid">
         <Grid.ColumnDefinitions>
             <ColumnDefinition></ColumnDefinition>
@@ -25,17 +46,21 @@
         <Viewbox Grid.Column="1" Grid.Row="0">
             <TextBlock Foreground="Goldenrod" Text="go" FontFamily="Algerian"></TextBlock>
         </Viewbox>
-        <Button FontFamily="Algerian" Background="Beige" Opacity="0.75"  Foreground="Goldenrod" Grid.Column="1" Grid.Row="1" Height="175" Width="300" Click="Play_Click" Name="play" Content="Play" FontSize="70" HorizontalAlignment="Center"  >
+        <Button Template="{StaticResource NoMouseOverButtonTemplate}" MouseLeave="Play_OnMouseLeave" MouseEnter="Play_OnMouseEnter" FontFamily="Algerian" Background="Beige"
+                Opacity="0.75" Foreground="Goldenrod" Grid.Column="1" Grid.Row="1" Height="175" Width="300"
+                Click="Play_Click" Name="play" Content="Play" FontSize="70" HorizontalAlignment="Center">
             <Button.Resources>
                 <Style TargetType="{x:Type Border}">
-                    <Setter Property="CornerRadius" Value="20"/>
+                    <Setter Property="CornerRadius" Value="20" />
                 </Style>
             </Button.Resources>
         </Button>
-        <Button FontFamily="Algerian" Background="Beige" Opacity="0.75" Foreground="Goldenrod" Grid.Column="1" Grid.Row="2" Height="100" Width="200" Click="exit_Click"  Name="exit" Content="Exit" FontSize="40" HorizontalAlignment="Center">
+        <Button Template="{StaticResource NoMouseOverButtonTemplate}" FontFamily="Algerian" Background="Beige"
+                Opacity="0.75" Foreground="Goldenrod" Grid.Column="1" Grid.Row="2" Height="100" Width="200"
+                Click="exit_Click" MouseEnter="Exit_OnMouseEnter" MouseLeave="Exit_OnMouseLeave" Name="exit" Content="Exit" FontSize="40" HorizontalAlignment="Center">
             <Button.Resources>
                 <Style TargetType="{x:Type Border}">
-                    <Setter Property="CornerRadius" Value="10"/>
+                    <Setter Property="CornerRadius" Value="10" />
                 </Style>
             </Button.Resources>
         </Button>

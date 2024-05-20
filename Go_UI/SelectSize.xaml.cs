@@ -1,4 +1,6 @@
 ﻿using System.Windows;
+using System.Windows.Input;
+
 namespace Go_UI
 {
     /// <summary>
@@ -37,6 +39,40 @@ namespace Go_UI
             SelectKomi page = new SelectKomi();
             this.Close();
             page.ShowDialog();
+        }
+
+        private void BackButton_OnMouseEnter(object sender, MouseEventArgs e)
+        {
+            BackButton.Opacity = 0.6;
+        }
+
+        private void BackButton_OnMouseLeave(object sender, MouseEventArgs e)
+        {
+            BackButton.Opacity = 1;
+        }
+
+        private void Board13_OnMouseEnter(object sender, MouseEventArgs e)
+        {
+            TextBlock13.Text = "13 x 13";
+            Board13.Opacity = 0.8;
+        }
+
+        private void Board13_OnMouseLeave(object sender, MouseEventArgs e)
+        {
+            TextBlock13.Text = "";
+            Board13.Opacity = 1;
+        }
+
+        private void Board9_OnMouseEnter(object sender, MouseEventArgs e)
+        {
+            TextBlock9.Text = "9 x 9";
+            Board9.Opacity = 0.8;
+        }
+
+        private void Board9_OnMouseLeave(object sender, MouseEventArgs e)
+        {
+            TextBlock9.Text = "";
+            Board9.Opacity = 1;
         }
     }
 }

@@ -5,8 +5,30 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Go_UI"
         mc:Ignorable="d"
-        Title=""  Width="1000"  Height="1000"
+        Title="" Width="1000" Height="1000"
         WindowStartupLocation="CenterScreen">
+
+    <Window.Resources>
+        <ControlTemplate x:Key="NoMouseOverButtonTemplate"
+                         TargetType="Button">
+            <Border Background="{TemplateBinding Background}"
+                    BorderBrush="{TemplateBinding BorderBrush}"
+                    BorderThickness="{TemplateBinding BorderThickness}">
+                <ContentPresenter HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
+                                  VerticalAlignment="{TemplateBinding VerticalContentAlignment}" />
+            </Border>
+
+            <ControlTemplate.Triggers>
+                <Trigger Property="IsEnabled"
+                         Value="False">
+                    <Setter Property="Background"
+                            Value="{x:Static SystemColors.ControlLightBrush}" />
+                    <Setter Property="Foreground"
+                            Value="{x:Static SystemColors.GrayTextBrush}" />
+                </Trigger>
+            </ControlTemplate.Triggers>
+        </ControlTemplate>
+    </Window.Resources>
     <Grid x:Name="Grid">
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="3*"></ColumnDefinition>
@@ -21,37 +43,82 @@
         <Grid.Background>
             <SolidColorBrush Color="PaleGoldenrod"></SolidColorBrush>
         </Grid.Background>
-        <Button Opacity="0.75" Grid.RowSpan="2" Grid.Column="0" Grid.Row="0" Height="315" Width="315" Click="PvP_Click"  Name="PvP" HorizontalAlignment="Right">
+
+        <Border MouseEnter="PvP_OnMouseEnter" MouseLeave="PvP_OnMouseLeave" Name="PVPBorder" Opacity="1"
+                Grid.RowSpan="2" Grid.Column="0"
+                Grid.Row="0" Height="315" Width="315" CornerRadius="50">
+            <Border.Background>
+                <ImageBrush
+                    ImageSource="C:\Users\naorb\source\repos\goFinalProject\Go_UI\Assets\PlayerVsPlayer.png">
+                </ImageBrush>
+            </Border.Background>
+            <Button Click="PvP_Click" Name="PvP" Template="{StaticResource NoMouseOverButtonTemplate}"
+                    Background="Transparent" BorderBrush="Transparent">
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition></RowDefinition>
+                        <RowDefinition></RowDefinition>
+                        <RowDefinition></RowDefinition>
+                    </Grid.RowDefinitions>
+                    <TextBlock Grid.Row="0" Name="PVPT1" FontFamily="algerian" Text="" FontSize="50" />
+                    <TextBlock Grid.Row="1" HorizontalAlignment="Center" Name="PVPT2" FontFamily="algerian" Text="" FontSize="50" />
+                    <TextBlock Grid.Row="2" Name="PVPT3" FontFamily="algerian" Text="" FontSize="50" />
+                </Grid>
+            </Button>
+        </Border>
+
+        <Border MouseEnter="AIvP_OnMouseEnter" MouseLeave="AIvP_OnMouseLeave" Name="PVAIBorder" Grid.RowSpan="2"
+                Grid.Column="1" Grid.Row="0" Height="315" Width="315" CornerRadius="50">
+            <Border.Background>
+                <ImageBrush
+                    ImageSource="C:\Users\naorb\source\repos\goFinalProject\Go_UI\Assets\PlayerVSAi.png">
+                </ImageBrush>
+            </Border.Background>
+            <Button Click="AIvP_Click" Name="AIvP" Template="{StaticResource NoMouseOverButtonTemplate}"
+                    Background="Transparent" BorderBrush="Transparent">
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition></RowDefinition>
+                        <RowDefinition></RowDefinition>
+                        <RowDefinition></RowDefinition>
+                    </Grid.RowDefinitions>
+                    <TextBlock Grid.Row="0" Name="PVAIT1" FontFamily="algerian" Text="" FontSize="50" />
+                    <TextBlock Grid.Row="1" HorizontalAlignment="Center" Name="PVAIT2" FontFamily="algerian" Text="" FontSize="50" />
+                    <TextBlock Grid.Row="2" HorizontalAlignment="Center" Name="PVAIT3" FontFamily="algerian" Text="" FontSize="50" />
+                </Grid>
+            </Button>
+        </Border>
+
+        <Border MouseEnter="FSMvP_OnMouseEnter" MouseLeave="FSMvP_OnMouseLeave" Name="PVMBorder" Grid.RowSpan="2"
+                Grid.Column="2" Grid.Row="0" Height="315" Width="315" CornerRadius="50">
+            <Border.Background>
+                <ImageBrush
+                    ImageSource="C:\Users\naorb\source\repos\goFinalProject\Go_UI\Assets\PlayerVSFsm.png">
+                </ImageBrush>
+            </Border.Background>
+            <Button Click="FSMvP_Click" Name="FSMvP" Template="{StaticResource NoMouseOverButtonTemplate}"
+                    Background="Transparent" BorderBrush="Transparent">
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition></RowDefinition>
+                        <RowDefinition></RowDefinition>
+                        <RowDefinition></RowDefinition>
+                    </Grid.RowDefinitions>
+                    <TextBlock Grid.Row="0" Name="PVMT1" FontFamily="algerian" Text="" FontSize="50" />
+                    <TextBlock Grid.Row="1" HorizontalAlignment="Center" Name="PVMT2" FontFamily="algerian" Text="" FontSize="50" />
+                    <TextBlock Grid.Row="2" HorizontalAlignment="Center" Name="PVMT3" FontFamily="algerian" Text="" FontSize="50" />
+                </Grid>
+            </Button>
+        </Border>
+
+        <Button MouseEnter="BackButton_OnMouseEnter" MouseLeave="BackButton_OnMouseLeave" Name="BackButton"
+                Template="{StaticResource NoMouseOverButtonTemplate}" FontFamily="Algerian" Background="Beige"
+                Opacity="0.75" Foreground="Goldenrod" Grid.Column="0"
+                Grid.ColumnSpan="3" Grid.Row="2" Height="100" Width="200" Click="BackButton_Click"
+                Content="Back" FontSize="30" HorizontalAlignment="Center">
             <Button.Resources>
                 <Style TargetType="{x:Type Border}">
-                    <Setter Property="CornerRadius" Value="15"/>
-                </Style>
-            </Button.Resources>
-            <Image Source = "C:\Users\naorb\source\repos\goFinalProject\Go_UI\Assets\PlayerVsPlayer.png">
-            </Image>
-        </Button>
-        <Button Opacity="0.75" Grid.RowSpan="2" Grid.Column="1" Grid.Row="0" Height="315" Width="315" Click="AIvP_Click"  Name="AIvP" HorizontalAlignment="Center">
-            <Button.Resources>
-                <Style TargetType="{x:Type Border}">
-                    <Setter Property="CornerRadius" Value="15"/>
-                </Style>
-            </Button.Resources>
-            <Image Source = "C:\Users\naorb\source\repos\goFinalProject\Go_UI\Assets\PlayerVSAi.png">
-            </Image>
-        </Button>
-        <Button Opacity="0.75" Grid.RowSpan="2" Grid.Column="2" Grid.Row="0" Height="315" Width="315" Click="FSMvP_Click"  Name="FSMvP" HorizontalAlignment="Left">
-            <Button.Resources>
-                <Style TargetType="{x:Type Border}">
-                    <Setter Property="CornerRadius" Value="15"/>
-                </Style>
-            </Button.Resources>
-            <Image Source = "C:\Users\naorb\source\repos\goFinalProject\Go_UI\Assets\PlayerVSFsm.png">
-            </Image>
-        </Button>
-        <Button FontFamily="Algerian" Background="Beige" Opacity="0.75" Foreground="Goldenrod" Grid.Column="0" Grid.ColumnSpan="3" Grid.Row="2" Height="100" Width="200" Click="BackButton_Click"  Name="BackButton" Content="Back" FontSize="30" HorizontalAlignment="Center">
-            <Button.Resources>
-                <Style TargetType="{x:Type Border}">
-                    <Setter Property="CornerRadius" Value="10"/>
+                    <Setter Property="CornerRadius" Value="10" />
                 </Style>
             </Button.Resources>
         </Button>

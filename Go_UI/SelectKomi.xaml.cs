@@ -1,4 +1,5 @@
 ﻿using System.Windows;
+using System.Windows.Input;
 
 namespace Go_UI
 {
@@ -96,6 +97,66 @@ namespace Go_UI
             MainWindow page = new MainWindow();
             this.Close();
             page.ShowDialog();
+        }
+
+        private void PlusHalf_OnMouseEnter(object sender, MouseEventArgs e)
+        {
+            PlusHalf.Opacity = 0.675;
+        }
+
+        private void PlusHalf_OnMouseLeave(object sender, MouseEventArgs e)
+        {
+            PlusHalf.Opacity = 1;
+        }
+
+        private void PlusOne_OnMouseEnter(object sender, MouseEventArgs e)
+        {
+            PlusOne.Opacity = 0.675;
+        }
+
+        private void PlusOne_OnMouseLeave(object sender, MouseEventArgs e)
+        {
+            PlusOne.Opacity = 1;
+        }
+
+        private void MinusHalf_OnMouseEnter(object sender, MouseEventArgs e)
+        {
+            MinusHalf.Opacity = 0.675;
+        }
+
+        private void MinusHalf_OnMouseLeave(object sender, MouseEventArgs e)
+        {
+            MinusHalf.Opacity = 1;
+        }
+
+        private void MinusOne_OnMouseEnter(object sender, MouseEventArgs e)
+        {
+            MinusOne.Opacity = 0.675;
+        }
+
+        private void MinusOne_OnMouseLeave(object sender, MouseEventArgs e)
+        {
+            MinusOne.Opacity = 1;
+        }
+
+        private void BackButton_OnMouseEnter(object sender, MouseEventArgs e)
+        {
+            BackButton.Opacity = 0.6;
+        }
+
+        private void BackButton_OnMouseLeave(object sender, MouseEventArgs e)
+        {
+            BackButton.Opacity = 1;
+        }
+
+        private void Continue_OnMouseEnter(object sender, MouseEventArgs e)
+        {
+            Continue.Opacity = 0.6;
+        }
+
+        private void Continue_OnMouseLeave(object sender, MouseEventArgs e)
+        {
+            Continue.Opacity = 1;
         }
     }
 }

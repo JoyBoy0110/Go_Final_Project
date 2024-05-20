@@ -285,5 +285,25 @@ namespace Go_UI
                 EndGame(EndType.Resign);
             }
         }
+
+        private void Resign_OnMouseEnter(object sender, MouseEventArgs e)
+        {
+            ResignBorder.Opacity = 0.8;
+        }
+
+        private void Resign_OnMouseLeave(object sender, MouseEventArgs e)
+        {
+            ResignBorder.Opacity = 1;
+        }
+
+        private void PassButton_OnMouseEnter(object sender, MouseEventArgs e)
+        {
+            PassBorder.Opacity = 0.8;
+        }
+
+        private void PassButton_OnMouseLeave(object sender, MouseEventArgs e)
+        {
+            PassBorder.Opacity = 1;
+        }
     }
 }
